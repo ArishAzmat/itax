@@ -18,7 +18,7 @@ const printDocument = () =>{
 
   var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
 
-console.log("test here",document.getElementById('HTMLtoPDF'))
+  console.log("test here",document.getElementById('HTMLtoPDF'))
   html2canvas(document.getElementById('HTMLtoPDF'),{allowTaint:true}).then(function(canvas) {
     console.log("then=>")
     canvas.getContext('2d');
@@ -70,22 +70,23 @@ console.log("test here",document.getElementById('HTMLtoPDF'))
         <p className="case-modal case-number">{props.content.case_number}</p>
   
           <div className="row">
-          <div className="col-md-5 txt-center"> <span className="case-modal ">Appeal Filed on </span>{props.content.appeal_filing_date}</div> 
+          <div className="col-md-5 txt-center"> <span className="case-modal ">Appeal Filed on: </span>{props.content.appeal_filing_date}</div> 
           <div className="col-md-2"></div>
-          <div className="col-md-5 txt-center"> <span className="case-modal ">Date of Judgment </span> {props.content.date_of_order}</div>
+          <div className="col-md-5 txt-center"> <span className="case-modal ">Date of Judgment: </span> {props.content.date_of_order}</div>
         </div>
-        <p className="case-modal case-name">{props.content.in_favour_of}</p>
+        <p className="case-modal case-name">In favour of: {props.content.in_favour_of}</p>
       
         <br/>
-        <h3 class="head-note">Head Note</h3>
+        <p class="head-note">Head Note</p>
         <div
           dangerouslySetInnerHTML={{
             __html: props.content.gist,
           }}
         />
+          <p class="head-note">Judgment: </p>
          <div
           dangerouslySetInnerHTML={{
-            __html: props.content.judgment,
+            __html: props.content.judgement_html,
           }}
         />
       </div>

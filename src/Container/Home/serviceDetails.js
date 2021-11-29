@@ -100,7 +100,6 @@ export default class ServiceDetails extends Component {
 
             <div class="about-info">
               <div class="row">
-                {!applyForm ? (
                   <div class="col-md-8">
                    {category.description}
                     <div class="panel-group" id="accordion">
@@ -135,12 +134,12 @@ export default class ServiceDetails extends Component {
                                   </div>
                                   <div class="col-md-11">
                                     <p>{each.description}</p>
-                                    <a
-                                      onClick={() => this.handelApply(each)}
+                                    <Link
+                                     to={`/apply-form/${each.category_id}/${each.id}`}
                                       class="readmore"
                                     >
                                       Apply Now
-                                    </a>
+                                    </Link>
                                   </div>
                                 </div>
                               </div>
@@ -221,9 +220,6 @@ export default class ServiceDetails extends Component {
                     </div> */}
                     </div>
                   </div>
-                ) : (
-                  <ApplySerive  service={activeService} />
-                )}
 
                 <div class="col-md-4">
                 <div class="mb-10">
@@ -240,7 +236,7 @@ export default class ServiceDetails extends Component {
                           {relatedServices.length > 0 &&
                             relatedServices.map((each, key) => {
                               return (
-                              <Link to={`/service-details/${each.category_id}/${each.id}`}>  <li>
+                              <Link key={key} to={`/apply-form/${each.category_id}/${each.id}`}>  <li>
                                   <i class="fa fa-cog"></i>{each.service_name}
                                 </li>
                                 </Link>

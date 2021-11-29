@@ -5,6 +5,7 @@ import blogImage from "../../images/blog/blog1.png";
 import NewsLetter from "../../Components/home/subscribeNewsletter";
 import RestApi from "../../services/api";
 import { Link } from "react-router-dom";
+import ModalRoot from "../../Components/modal/modalRoot";
 
 export default class blog extends Component {
   constructor(props) {
@@ -25,7 +26,8 @@ export default class blog extends Component {
       cId: "",
       paginateSeries: 1,
       isSearch: false, 
-      keyword:""
+      keyword:"",
+      isOpen:false,
     };
   }
   componentDidMount() {
@@ -82,6 +84,11 @@ export default class blog extends Component {
         });
       }
     });
+  }
+  handleReadMore() {
+    // this.setState({
+    //   isOpen:true
+    // })
   }
   changePage(currentPage) {
     console.log(currentPage);
@@ -251,15 +258,16 @@ export default class blog extends Component {
                                   }}
                                 />
 
-                                <Link to={`/blog-details/${each.id}`}>
+                                {/* <Link to={`/blog-details/${each.id}`}> */}
                                   <a
+                                  onClick={()=>this.handleReadMore()}
                                     className="readmore"
                                     data-toggle="modal"
                                     data-target="#blogModal"
                                   >
                                     Read More...
                                   </a>
-                                </Link>
+                                {/* </Link> */}
                               </div>
                             </div>
                           </div>
@@ -525,6 +533,15 @@ export default class blog extends Component {
 
         <NewsLetter />
         <Footer />
+        <ModalRoot
+          title={"Confirm"}
+          close={() => this.setState({ isOpen: false })}
+          isOpen={this.state.isOpen}
+          // width={"75%"}
+          body={
+            "asd"
+          }
+        />
       </div>
     );
   }

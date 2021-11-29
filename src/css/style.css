@@ -2062,7 +2062,7 @@ aside .tag-widget .tags a:hover {
 /*=================================  contact  =====================================*/
 
 .contact-title {
-  font-size: 15px;
+  font-size: 15px!important;
   font-weight: 400 !important;
   padding: 8px 3px;
   margin-top: 0;
@@ -3632,7 +3632,7 @@ transform: translateY(-2%);
 }
 
 .download-pdf {
-  padding: 70px 97px;
+  padding: 45px 97px;
 }
 .services_list ul li.searchHasService {
   background-image: linear-gradient(to bottom, #ffe058, #f3f3e6);
@@ -3859,8 +3859,32 @@ transform: translateY(-2%);
   justify-content: center;
 }
 .head-note{
-  font-weight: 400;
+  font-weight: 600;
+  text-align: left!important;
   text-decoration: underline;
+}
+.col-padding-normal {
+  padding-left: 15px!important;
+  padding-right: 15px!important;
+}
+.apply-form th {
+  background-color: #d6ebcf;
+  border: 1px solid #e2dede!important;
+  text-align: left;
+  padding: 4px 6px;
+}
+.apply-form td {
+  border: 1px solid #e2dede!important;
+  text-align: left;
+  padding: 4px 6px;
+}
+.service-charges ol {
+  padding-left: 15px;
+}
+.resty {
+  font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width:100%
 }
 .marquee-ul section{
   /* position: initial!important;; */

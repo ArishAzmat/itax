@@ -1,56 +1,112 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { Component } from "react";
+import { set } from "react-hook-form";
+import Footer from "../../Common/footer";
+import Newsletter from "../../Components/home/subscribeNewsletter";
 import RestApi from "../../services/api";
+import { Link } from "react-router-dom";
+import Common from "../../Common/common";
 
-function AppyService(props) {
-  const [ServiceDetails, setServiceDetails] = useState({  
-    document_details:[],
-    financial_year:[],
-    options:[],
-    payable_options:{},
-    service_details:{},
-    isCustomised:false,
-    totalAmount:0,
-    advanceAmount:0,
-  });
+export default class ApplyForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      relatedServices: [],
+      documentDetails:[],
+      financialYear:[],
+      options:[],
+      payableOptions:{},
+      service_details:{},
+      isCustomised:false,
+      totalAmount:0,
+      advanceAmount:0,
+      serviceDetails:{},
+      onCompletion:0
+    };
+  }
+  componentDidMount() {
+      console.log("asdsadasd aplyform")
+    this.fetchData();
+  }
 
-  let { id, sId } = useParams();
+  componentDidUpdate(prevProps){
+    if(prevProps.match.params.cid != this.props.match.params.cid || prevProps.match.params.Sid != this.props.match.params.Sid ){
+      this.fetchData();
+    }
+  }
+  fetchData() {
+    let cid = this.props.match.params.cid;
+    let sId = this.props.match.params.sId;
+    RestApi.serviceDocument(cid, sId).then((res) => {
+        console.log(res);
+        if (res.data.status) { 
+            let {data} = res.data;
+            let options = [];
+            let isCustomised =  data.service_details.is_customized == '0' ? true : false;
+            if(isCustomised){
+            options = Common.groupBy(['frequency'])(data.options)
+            console.log("groupedOptions",options)
+            } 
+            
+            this.setState({
+              documentDetails:data.document_details,
+              financialYear:data.financial_year,
+              options,
+              payableOptions:data.payable_options,
+              serviceDetails:data.service_details,
+              totalAmount:data.service_details.service_charge,
+              isCustomised,
+              advanceAmount:data.payable_options.advance,
+              onCompletion:data.payable_options.on_completion
+  
+            });
+          
+        }
+      }).catch((e)=> {
+        console.log("Error: ",e)
+      });
+  }
 
-  useEffect(() => {
-    fetchData();
-  }, [id, sId]);
+  render() {
+  console.log(this.props.match.params.sId,this.state)
+    let {
+      title,
+      relatedServices,
+      totalAmount,
+      advanceAmount,
+      isCustomised,
+      documentDetails,
+      financialYear,
+      serviceDetails,
+      payableOptions,
+      options
+    } = this.state;
+    return (
+      <>
+        <div class="breadcrumbpane">
+          <div class="container">
+            <h1 class="pull-left"> {title}</h1>
+          </div>
+        </div>
+        <section className={"contact-section"} id="about">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="section-title text-center">
+                  {/* <p>Business Startup Services</p>  */}
+                </div>
+                {/* <!-- /.section-title --> */}
+              </div>
+            </div>
 
-  const fetchData = () => {
-    RestApi.serviceDocument(id, sId).then((res) => {
-      console.log(res);
-      if (res.data.status) { 
-          setServiceDetails({
-            document_details:res.data.data.document_details,
-            financial_year:res.data.data.financial_year,
-            options:res.data.data.options,
-            payable_options:res.data.data.payable_options,
-            service_details:res.data.data.service_details,
-            totalAmount:res.data.data.service_details.service_charge,
-            isCustomised: res.data.data.service_details.is_customized,
-
-          });
-        
-      }
-    }).catch((e)=> {
-      console.log("Error: ",e)
-    });
-  };
-  console.log("ServiceDetails", ServiceDetails);
- 
-  return (
-    <>
-      <div class="col-lg-8">
-        <h3 class="servicehead">{ServiceDetails.service_details?.service_name}</h3>
+            <div class="about-info">
+              <div class="row">
+              <div class="col-lg-8">
+        <h3 class="servicehead">{serviceDetails?.service_name}</h3>
         <div class="servicebody">
           <div class="section-title">
-            <p>{ServiceDetails.service_details?.description}</p>
+            <p>{serviceDetails.description}</p>
           </div>
-          <h2 class="contact-title">SELECT YOUR OPIONS</h2>
+          <h2 class="contact-title">{ isCustomised ? "SELECT YOUR OPIONS" : "BRIEF DESCRIPTION OF REQUIREMENTS" }</h2>
           <div
             class=""
             style={{
@@ -67,8 +123,8 @@ function AppyService(props) {
                 id="fyear"
                 style={{ width: "100px", padding: "4px" }}
               >
-                {ServiceDetails.financial_year?.length > 0 && 
-                 ServiceDetails.financial_year.map((f)=> {
+                {financialYear?.length > 0 && 
+                 financialYear.map((f)=> {
                   return <option value={f.id}>{f.display_name}</option>
                  }) 
                  }
@@ -77,7 +133,7 @@ function AppyService(props) {
               </select>
             </form>
           </div>
-          {<form
+          {isCustomised && <form
             class="form-contact"
             action="#"
             method="post"
@@ -111,16 +167,20 @@ function AppyService(props) {
                     </tr>
                     <tr>
                       <td>
-                        <div class="pull-left">April</div>
+                        {options.Monthly?.length > 0 &&
+                        options.Monthly.map((m,k)=> {
+                        return <><div key={k} class="pull-left">{m.frequency_stage_period}</div>
                         <div class="pull-right">
-                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> 1000
+                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee}
                         </div>
                         <div class="pull-right">
-                          <input type="checkbox" name="month" />
+                          <input type="checkbox" name="month" checked="" />
                         </div>
                         <br />
-                        <hr />
-                        <div class="pull-left">May</div>
+                        <hr /> 
+                        </>
+                        })}
+                        {/* <div class="pull-left">May</div>
                         <div class="pull-right">
                           &nbsp;&nbsp;<i class="fa fa-rupee"></i> 1000
                         </div>
@@ -128,11 +188,24 @@ function AppyService(props) {
                           <input type="checkbox" name="month" checked="" />
                         </div>
                         <br />
-                        <hr />
+                        <hr /> */}
                         
                       </td>
                       <td style={{ verticalAlign: "unset" }}>
-                        <div class="pull-left">Quarter1</div>
+                      {options.Quarterly?.length > 0 &&
+                        options.Quarterly.map((m,k)=> {
+                        return <><div k={k} class="pull-left">{m.frequency_stage_period}</div>
+                        <div class="pull-right">
+                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee}
+                        </div>
+                        <div class="pull-right">
+                          <input type="checkbox" name="quarter" checked="" />
+                        </div>
+                        <br />
+                        <hr />
+                        </>
+                        })}
+                        {/* <div class="pull-left">Quarter2</div>
                         <div class="pull-right">
                           &nbsp;&nbsp;<i class="fa fa-rupee"></i> 500
                         </div>
@@ -140,32 +213,27 @@ function AppyService(props) {
                           <input type="checkbox" name="quarter" checked="" />
                         </div>
                         <br />
-                        <hr />
-                        <div class="pull-left">Quarter2</div>
-                        <div class="pull-right">
-                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> 500
-                        </div>
-                        <div class="pull-right">
-                          <input type="checkbox" name="quarter" checked="" />
-                        </div>
-                        <br />
-                        <hr />
+                        <hr /> */}
                       </td>
                       <td style={{ verticalAlign: "unset" }}>
-                        <div class="pull-left">Yearly</div>
+                      {options.Yearly?.length > 0 &&
+                        options.Yearly.map((m,k)=> {
+                        return <> <div  k={k} class="pull-left">{m.frequency_stage_period}</div>
                         <div class="pull-right">
-                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> 1000
+                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee}
                         </div>
                         <div class="pull-right">
                           <input type="checkbox" name="yearly" checked="" />
                         </div>
                         <br />
                         <hr />
+                        </>
+                        })}
                       </td>
                       <td
                         style={{ verticalAlign: "unset", textAlign: "center" }}
                       >
-                        <i class="fa fa-rupee"></i> 8000.00
+                        <i class="fa fa-rupee"></i>{totalAmount}
                       </td>
                     </tr>
                     {/* <!-- <tr>
@@ -180,7 +248,7 @@ function AppyService(props) {
             </div>
           </form>}
           <br/>
-          <h2 class="contact-title">BRIEF DESCRIPTION OF REQUIREMENTS</h2>
+          {isCustomised && <h2 class="contact-title">BRIEF DESCRIPTION OF REQUIREMENTS</h2>}
           <form
             class="form-contact contact_form"
             method="post"
@@ -204,14 +272,14 @@ function AppyService(props) {
               </div>
               <div class="col-md-12 col-padding-normal">
                 <h2 class="contact-title">Documents Required</h2>
-                <table className="apply-form">
+                <table className="apply-form resty">
                   <tr>
                     <th width="30%">Documents Type</th>
                     <th width="30%">Select a file to upload</th>
                     <th width="30%">Previous Uploaded Document</th>
                   </tr>
-                  {ServiceDetails.document_details?.length > 0 &&
-                    ServiceDetails.document_details.map((each, key) => {
+                  {documentDetails?.length > 0 &&
+                    documentDetails.map((each, key) => {
                       return (
                         <tr>
                           <td key={key}>
@@ -248,16 +316,16 @@ function AppyService(props) {
                   <div class="service-charges">
                     <p>
                       <b>
-                        Service Charges: Rs. <i className="fa fa-rupee" /> {ServiceDetails?.service_details?.service_charge}
+                        Service Charges: Rs. <i className="fa fa-rupee" /> {totalAmount}
                       </b>
                     </p>
                     <h4>Payable Option</h4>
                     <ol>
                       <li>
-                        Advance: <span><i className="fa fa-rupee" /> {ServiceDetails.payable_options.advance}</span>
+                        Advance: <span><i className="fa fa-rupee" /> {advanceAmount}</span>
                       </li>
                       <li>
-                        On Completion: <span><i className="fa fa-rupee" /> {ServiceDetails.payable_options.on_completion}</span>
+                        On Completion: <span><i className="fa fa-rupee" /> {totalAmount - advanceAmount}</span>
                       </li>
                     </ol>
                   </div>
@@ -276,8 +344,39 @@ function AppyService(props) {
           </form>
         </div>
       </div>
-    </>
-  );
+                <div class="col-md-4">
+                <div class="mb-10">
+                  <a href="create_own_services.php" class="create_own_services">
+                    <i class="fa fa-gg" aria-hidden="true"></i>&nbsp;<h4>Create Your Own Services</h4>
+                  </a>
+                  </div>
+                  <div class="servicebox">
+                    <h3>Our Related Services</h3>
+                    <div class="relatedservicesbox">
+                      <a >
+                        {/* <h4>Financial Funding and Debt Mgmt.</h4> */}
+                        <ul>
+                          {relatedServices.length > 0 &&
+                            relatedServices.map((each, key) => {
+                              return (
+                              <Link to={`/service-details/${each.category_id}/${each.id}`}>  <li>
+                                  <i class="fa fa-cog"></i>{each.service_name}
+                                </li>
+                                </Link>
+                              );
+                            })}
+                        </ul>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <Newsletter />
+        <Footer />
+      </>
+    );
+  }
 }
-
-export default AppyService;

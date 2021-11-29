@@ -6,7 +6,7 @@ import Newsletter from "../../Components/home/subscribeNewsletter";
 import { Link } from "react-router-dom";
 import ModalRoot from "../../Components/modal/modalRoot";
 import CaseLawModal from "../../Components/modal/caseLawModal";
-
+import PdfIcon from '../../images/pdf-icon.png'
 export default class CaseLaw extends Component {
   constructor(props) {
     super(props);
@@ -338,11 +338,12 @@ export default class CaseLaw extends Component {
                                 {each.judgement != null && (
                                   <a
                                     target="_blank"
-                                    href="http://staging.itaxdoctor.com/uploads/2015/151020014301_upload.txt"
+                                    href={each.judgement}
                                     download=""
                                   >
+                                    
                                     <img
-                                      src="https://itaxdoctor.idossapp.com/assets/front_end/images/pdf-icon.png"
+                                      src={PdfIcon}
                                       style={{ width: "22%" }}
                                     />
                                   </a>
@@ -446,7 +447,6 @@ export default class CaseLaw extends Component {
           width={"75%"}
           body={
             <CaseLawModal
-              title={this.state.previewContent.case_name}
               content={this.state.previewContent}
             />
           }

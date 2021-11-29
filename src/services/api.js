@@ -72,6 +72,10 @@ export default class RestApi {
   static subscribe(params) {
     return axios.post(`${baseURL}/subscribe-newsletters`, params);
   }
+  static blogAccess(params) {
+    params = {...params,is_blog:'1'}
+    return axios.post(`${baseURL}/subscribe-newsletters`, params);
+  }
   static downloadForm() {
     return axios.get(`${baseURL}/download-forms`);
   }
