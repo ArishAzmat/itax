@@ -8,8 +8,14 @@ export default class Common {
     sessionStorage.setItem("userDetails", userDetails);
     sessionStorage.setItem("dashboard", dashboard);
   }
+  // static login(){
+  //   localSto
+  // }
   static logout() {
-    // sessionStorage.clear()
+    sessionStorage.clear();
+    // for(let i=0;i<10;i++){
+    //   console.log(i);
+    // }
   }
   static groupBy = (keys) => (array) =>
     array.reduce((objectsByKeyValue, obj) => {

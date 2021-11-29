@@ -19,14 +19,15 @@ class sideBar extends Component {
     };
   }
   componentDidMount() {
-    let { isServiceProvider, isCustomer, activeDashboard } = this.state;
-    if (isServiceProvider == "yes" && isCustomer == "yes") {
-      activeDashboard = this.props.dashboard;
-    } else if (isServiceProvider == "yes") {
-      activeDashboard = "serviceProvider";
-    } else if (isCustomer == "yes") {
-      activeDashboard = "customer";
-    }
+    // let { isServiceProvider, isCustomer, activeDashboard } = this.state;
+    // if (isServiceProvider == "yes" && isCustomer == "yes") {
+    //   activeDashboard = this.props.dashboard;
+    // } else if (isServiceProvider == "yes") {
+    //   activeDashboard = "serviceProvider";
+    // } else if (isCustomer == "yes") {
+    //   activeDashboard = "customer";
+    // }
+    console.log('sideboard',this.props, this.state);
   }
 
   changeDashboard(e) {

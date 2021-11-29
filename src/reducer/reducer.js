@@ -26,6 +26,7 @@ console.log("redux",action)
     case "LOGOUT":
       state = { ...state };
       state["isLogged"] = false;
+      console.log('isLogged','isLogged');
       state["userDetails"] = {};
       return state;
 

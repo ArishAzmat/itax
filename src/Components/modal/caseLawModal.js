@@ -26,6 +26,8 @@ console.log("test here",document.getElementById('HTMLtoPDF'))
     console.log(canvas.height+"  "+canvas.width);
 
 
+
+
     var imgData = canvas.toDataURL("image/jpeg", 1.0);
     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
       pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);

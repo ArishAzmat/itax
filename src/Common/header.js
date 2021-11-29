@@ -12,6 +12,7 @@ function Header(props) {
 
   const handleLogout = () => {
     // setOpenLogoutModal(false);
+    // props.history.push("/");
     RestApi.logout()
       .then((res) => {
         console.log(res);
@@ -20,14 +21,14 @@ function Header(props) {
         });
         RestApi.defaultToken(null);
         Common.logout();
-        props.history.replace("/");
+        props.history.push("/");
         // toast.success("Logout successfully");
       })
-
       .catch((error) => {
         Common.logout();
         console.log("error!", error);
       });
+
   };
   const handleClose = () => {
     setOpenLogoutModal(false);
