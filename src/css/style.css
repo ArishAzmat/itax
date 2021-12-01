@@ -3895,6 +3895,9 @@ transform: translateY(-2%);
   text-align: left;
   padding: 4px 6px;
 }
+.apply-form hr {
+  margin:2px 0px!important
+}
 .service-charges ol {
   padding-left: 15px;
 }
@@ -3903,6 +3906,12 @@ transform: translateY(-2%);
     border-collapse: collapse;
     width:100%
 }
-.marquee-ul section{
-  /* position: initial!important;; */
+.marquee-ul section:last-of-type{
+  position: unset!important;
 }
+.events-marquee section:last-of-type{
+  position: unset!important;
+}
+/* .events-marquee section div {
+  align-items:unset!important;
+}  */

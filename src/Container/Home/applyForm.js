@@ -10,6 +10,7 @@ export default class ApplyForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedOptions:{monthly:[],quarterly:[],yearly:[]},
       relatedServices: [],
       documentDetails:[],
       financialYear:[],
@@ -20,7 +21,8 @@ export default class ApplyForm extends Component {
       totalAmount:0,
       advanceAmount:0,
       serviceDetails:{},
-      onCompletion:0
+      onCompletion:0,
+      isQuotation:0
     };
   }
   componentDidMount() {
@@ -53,10 +55,12 @@ export default class ApplyForm extends Component {
               options,
               payableOptions:data.payable_options,
               serviceDetails:data.service_details,
-              totalAmount:data.service_details.service_charge,
+              totalAmount:parseFloat(data.service_details.service_charge),
               isCustomised,
               advanceAmount:data.payable_options.advance,
-              onCompletion:data.payable_options.on_completion
+              onCompletion:data.payable_options.on_completion,
+              relatedServices:data.related_services,
+              isQuotation:data.service_details.quotation_required
   
             });
           
@@ -66,10 +70,38 @@ export default class ApplyForm extends Component {
       });
   }
 
+  handleCheckbox =(e)=> {
+    let {totalAmount,selectedOptions} = this.state
+    console.log(selectedOptions)
+      if(e.target.checked) {
+        totalAmount += parseFloat(e.target.value)
+        selectedOptions[e.target.name] = [...selectedOptions[e.target.name], e.target.value]
+      }
+      else {
+        totalAmount -= parseFloat(e.target.value)
+        selectedOptions[e.target.name] = selectedOptions[e.target.name].filter(i => i != e.target.value)
+      }
+      //push options value to array eg: monthly :{value}
+      
+      //check for advance fee
+      let advanceAmount;
+      if(selectedOptions.monthly.length > 0){
+        advanceAmount = selectedOptions.monthly[0];
+      } else if(selectedOptions.quarterly.length > 0){
+        advanceAmount = selectedOptions.quarterly[0];
+      } else if(selectedOptions.yearly.length > 0){
+        advanceAmount = selectedOptions.yearly[0];
+      } else {
+        advanceAmount = 0;
+      }
+      this.setState({totalAmount,selectedOptions,advanceAmount})
+
+  }
+
   render() {
   console.log(this.props.match.params.sId,this.state)
     let {
-      title,
+      isQuotation,
       relatedServices,
       totalAmount,
       advanceAmount,
@@ -84,7 +116,7 @@ export default class ApplyForm extends Component {
       <>
         <div class="breadcrumbpane">
           <div class="container">
-            <h1 class="pull-left"> {title}</h1>
+            <h1 class="pull-left"> {serviceDetails.category_name}</h1>
           </div>
         </div>
         <section className={"contact-section"} id="about">
@@ -147,21 +179,21 @@ export default class ApplyForm extends Component {
                     <tr>
                       <th width="30%">
                         <div class="pull-left">Monthly Filing</div>
-                        <div class="pull-right">&nbsp;&nbsp;Fee</div>
+                       {!isQuotation && <div class="pull-right">&nbsp;&nbsp;Fee</div>}
                         <div class="pull-right">
-                          All <input type="checkbox" name="month" />
+                          All <input  type="checkbox" name="month" />
                         </div>
                       </th>
                       <th width="30%">
                         <div class="pull-left">Quarterly Filing</div>
-                        <div class="pull-right">&nbsp;&nbsp;Fee</div>
+                        {!isQuotation && <div class="pull-right">&nbsp;&nbsp;Fee</div>}
                         <div class="pull-right">
                           All <input type="checkbox" name="quarter" />
                         </div>
                       </th>
                       <th width="25%">
                         Annual Filing
-                        <div class="pull-right">&nbsp;&nbsp;Fee</div>
+                       {!isQuotation && <div class="pull-right">&nbsp;&nbsp;Fee</div>}
                       </th>
                       <th width="30%">Total Charges</th>
                     </tr>
@@ -170,11 +202,12 @@ export default class ApplyForm extends Component {
                         {options.Monthly?.length > 0 &&
                         options.Monthly.map((m,k)=> {
                         return <><div key={k} class="pull-left">{m.frequency_stage_period}</div>
-                        <div class="pull-right">
-                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee}
+                       {!isQuotation && <div class="pull-right">
+                          &nbsp;&nbsp;<i class="fa fa-rupee"></i>  {m.fee }
                         </div>
+                        }
                         <div class="pull-right">
-                          <input type="checkbox" name="month" checked="" />
+                          <input onChange={(e)=>this.handleCheckbox(e)} value={m.fee} type="checkbox" name="monthly"  />
                         </div>
                         <br />
                         <hr /> 
@@ -185,7 +218,7 @@ export default class ApplyForm extends Component {
                           &nbsp;&nbsp;<i class="fa fa-rupee"></i> 1000
                         </div>
                         <div class="pull-right">
-                          <input type="checkbox" name="month" checked="" />
+                          <input type="checkbox" name="month"  />
                         </div>
                         <br />
                         <hr /> */}
@@ -195,11 +228,11 @@ export default class ApplyForm extends Component {
                       {options.Quarterly?.length > 0 &&
                         options.Quarterly.map((m,k)=> {
                         return <><div k={k} class="pull-left">{m.frequency_stage_period}</div>
-                        <div class="pull-right">
+                        {!isQuotation && <div class="pull-right">
                           &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee}
-                        </div>
+                        </div>}
                         <div class="pull-right">
-                          <input type="checkbox" name="quarter" checked="" />
+                          <input onChange={(e)=>this.handleCheckbox(e)} value={!isQuotation ? m.fee : 0} type="checkbox" name="quarterly"  />
                         </div>
                         <br />
                         <hr />
@@ -210,7 +243,7 @@ export default class ApplyForm extends Component {
                           &nbsp;&nbsp;<i class="fa fa-rupee"></i> 500
                         </div>
                         <div class="pull-right">
-                          <input type="checkbox" name="quarter" checked="" />
+                          <input type="checkbox" name="quarter"  />
                         </div>
                         <br />
                         <hr /> */}
@@ -219,11 +252,11 @@ export default class ApplyForm extends Component {
                       {options.Yearly?.length > 0 &&
                         options.Yearly.map((m,k)=> {
                         return <> <div  k={k} class="pull-left">{m.frequency_stage_period}</div>
+                        {!isQuotation  && <div class="pull-right">
+                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee }
+                        </div>}
                         <div class="pull-right">
-                          &nbsp;&nbsp;<i class="fa fa-rupee"></i> {m.fee}
-                        </div>
-                        <div class="pull-right">
-                          <input type="checkbox" name="yearly" checked="" />
+                          <input onChange={(e)=>this.handleCheckbox(e)} value={!isQuotation ? m.fee : 0} type="checkbox" name="yearly"  />
                         </div>
                         <br />
                         <hr />
@@ -233,7 +266,7 @@ export default class ApplyForm extends Component {
                       <td
                         style={{ verticalAlign: "unset", textAlign: "center" }}
                       >
-                        <i class="fa fa-rupee"></i>{totalAmount}
+                        <i class="fa fa-rupee"></i>{!isQuotation ? totalAmount: 0}
                       </td>
                     </tr>
                     {/* <!-- <tr>
@@ -284,7 +317,7 @@ export default class ApplyForm extends Component {
                         <tr>
                           <td key={key}>
                             {each.display_name}{" "}
-                            {each.is_mandatory == "yes" && <span>*</span>}
+                            {each.is_mandatory == "yes" && <span style={{color:'red'}}>*</span>}
                           </td>
                           <td>
                             <input
@@ -312,22 +345,27 @@ export default class ApplyForm extends Component {
                         </tr> */}
                 </table>
                 {/* <!-- <p style="color: red;">[Note: (*) for Mandatory Field]</p> --> */}
-                <div class="col-md-3  col-padding-normal" style={{ padding: "0" }}>
+                <div class="col-md-4  col-padding-normal" style={{ padding: "0" }}>
                   <div class="service-charges">
                     <p>
                       <b>
-                        Service Charges: Rs. <i className="fa fa-rupee" /> {totalAmount}
+                    {!isQuotation ?
+                        <>Service Charges: Rs. <i className="fa fa-rupee" />  totalAmount </>
+                        :'Service Charges To Be Provided After Review'}
                       </b>
+                      
                     </p>
-                    <h4>Payable Option</h4>
+                    {!isQuotation && 
+                    <> <h4>Payable Option</h4>
                     <ol>
                       <li>
                         Advance: <span><i className="fa fa-rupee" /> {advanceAmount}</span>
                       </li>
                       <li>
-                        On Completion: <span><i className="fa fa-rupee" /> {totalAmount - advanceAmount}</span>
+                        As Per Payment Plan: <span><i className="fa fa-rupee" /> {totalAmount - advanceAmount}</span>
                       </li>
-                    </ol>
+                    </ol> 
+                    </>}
                   </div>
                 </div>
               </div>
@@ -359,7 +397,7 @@ export default class ApplyForm extends Component {
                           {relatedServices.length > 0 &&
                             relatedServices.map((each, key) => {
                               return (
-                              <Link to={`/service-details/${each.category_id}/${each.id}`}>  <li>
+                              <Link to={`/apply-form/${each.category_id}/${each.id}`}>  <li>
                                   <i class="fa fa-cog"></i>{each.service_name}
                                 </li>
                                 </Link>

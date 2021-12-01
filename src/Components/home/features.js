@@ -161,7 +161,6 @@ export function Events() {
       }
     });
   }, []);
-  console.log("data", data);
   return (
     <div className="col-xl-3 col-md-6 col-lg-3">
       <div className="single_department other-act">
@@ -170,6 +169,15 @@ export function Events() {
           {data.upComing.length > 0 || data.previous.length > 0 ? (
             <p>
               <div className="events">
+                 {/* <Marquee
+  duration={5000}
+  height="245px"
+  width="100%"
+  axis="Y"
+  align="start"
+  pauseOnHover={true}
+  reverse={true}
+> */}
                 <marquee
                   style={{ height: "240px" }}
                   behavior="scroll"

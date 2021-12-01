@@ -159,6 +159,7 @@ class Home extends Component {
                     <Marquee
                       duration={15000}
                       pauseOnHover={true}
+                      axis={'X'}
                       background="#fafafa"
                       height="25px"
                       reverse={true}
