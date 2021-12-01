@@ -52,23 +52,6 @@
   font-weight: bold;
   font-size: 1.5rem;
 }
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-}
-*::-webkit-scrollbar {
-  width: 4px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: #1c8503;
-  border-radius: 20px;
-  border: transparent;
-}
 body {
   background: #fff none repeat scroll 0 0;
   color: #000;
@@ -3895,9 +3878,6 @@ transform: translateY(-2%);
   text-align: left;
   padding: 4px 6px;
 }
-.apply-form hr {
-  margin:2px 0px!important
-}
 .service-charges ol {
   padding-left: 15px;
 }
@@ -3906,12 +3886,6 @@ transform: translateY(-2%);
     border-collapse: collapse;
     width:100%
 }
-.marquee-ul section:last-of-type{
-  position: unset!important;
+.marquee-ul section{
+  /* position: initial!important;; */
 }
-.events-marquee section:last-of-type{
-  position: unset!important;
-}
-/* .events-marquee section div {
-  align-items:unset!important;
-}  */
