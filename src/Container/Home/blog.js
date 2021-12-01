@@ -4,10 +4,11 @@ import Header from "../../Common/header";
 import blogImage from "../../images/blog/blog1.png";
 import NewsLetter from "../../Components/home/subscribeNewsletter";
 import RestApi from "../../services/api";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import ModalRoot from "../../Components/modal/modalRoot";
+import { connect } from 'react-redux';
 
-export default class blog extends Component {
+class blog extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,11 +26,18 @@ export default class blog extends Component {
       year: "",
       cId: "",
       paginateSeries: 1,
-      isSearch: false, 
-      keyword:"",
-      isOpen:false,
+      isSearch: false,
+      keyword: "",
+      isOpen: false,
+      // subscriberName:'',
+      // subscriberEmail:'',
+      subscriber: {
+        name: '',
+        email: ''
+      }
     };
   }
+  isSubscribed = false;
   componentDidMount() {
     let { currentPage, search, month, year, cId } = this.state;
     if (this.props.match.params.search) {
@@ -56,7 +64,7 @@ export default class blog extends Component {
           res.data.data.blog_list.prev_page_url.lastIndexOf("=") + 1,
           res.data.data.blog_list.prev_page_url.length
         );
-        let isSearch = false,keyword="";
+        let isSearch = false, keyword = "";
         if (search.length > 0) {
           isSearch = true;
           keyword = search
@@ -85,10 +93,25 @@ export default class blog extends Component {
       }
     });
   }
-  handleReadMore() {
-    // this.setState({
-    //   isOpen:true
-    // })
+  handleReadMore(id) {
+    const isSubscribed = JSON.parse(sessionStorage.getItem('isSubscribed'));
+    if (this.props.isLoggin) {
+      this.props.history.push(`/blog-details/${id}`);
+      this.setState({
+        isOpen: false
+      });
+    } if (isSubscribed !== null) {
+      this.props.history.push(`/blog-details/${id}`);
+      this.setState({
+        isOpen: false
+      });
+    } else {
+      this.props.history.push('/blog');
+      this.setState({
+        isOpen: true
+      });
+    }
+
   }
   changePage(currentPage) {
     console.log(currentPage);
@@ -191,6 +214,43 @@ export default class blog extends Component {
     this.setState({ month, cId, search: "" });
     this.fetchData(1, "", month, year, cId);
   };
+  inputHandler(e) {
+    const data = this.state.subscriber;
+    if (e.target.name === 'firstname') {
+      data.name = e.target.value;
+    }
+    if (e.target.name === 'emailaddress') {
+      data.email = e.target.value;
+    }
+    this.setState({ subscriber: data });
+    console.log(this.state.subscriber);
+
+  }
+  accessBlog(e) {
+    e.preventDefault();
+    let params = this.state.subscriber;
+    RestApi.blogAccess(params)
+      .then(data => {
+        console.log('blog data', data);
+        console.log(data.data.message);
+        this.setState({ subscriber: { name: '', email: '' } });
+        if (data.data.message === 'This email id is already subscribed.') {
+          sessionStorage.setItem('isSubscribed', JSON.stringify(params));
+          alert(data.data.message);
+          // this.isSubscribed = true;
+        } if (data.data.status) {
+          sessionStorage.setItem('isSubscribed', JSON.stringify(params));
+          // this.isSubscribed = true;
+        }
+        this.setState({
+          isOpen: false
+        });
+      })
+      .catch(
+        err => console.log(err)
+      );
+
+  }
   render() {
     console.log("blog", this.state);
     let {
@@ -198,7 +258,7 @@ export default class blog extends Component {
       blogsByCategory,
       data,
       isSearch,
-      keyword  
+      keyword
     } = this.state;
     const styles = {
       display: {
@@ -221,18 +281,18 @@ export default class blog extends Component {
               <div className="col-lg-8">
                 <div className="blog_left_sidebar">
                   {isSearch && (
-                   <div className="serviceSearchResults">
-                   {data.length} results found for search keyword "{keyword}".{" "}
-                   <span
-                     className="select-click-here "
-                     onClick={() => {
-                       this.handleReset();
-                     }}
-                   >
-                     Click to view all blogs
-                   </span>{" "}
-                   or search using some other keywords.{" "}
-                 </div>
+                    <div className="serviceSearchResults">
+                      {data.length} results found for search keyword "{keyword}".{" "}
+                      <span
+                        className="select-click-here "
+                        onClick={() => {
+                          this.handleReset();
+                        }}
+                      >
+                        Click to view all blogs
+                      </span>{" "}
+                      or search using some other keywords.{" "}
+                    </div>
                   )}
                   {data.length > 0 &&
                     data.map((each, key) => {
@@ -259,14 +319,14 @@ export default class blog extends Component {
                                 />
 
                                 {/* <Link to={`/blog-details/${each.id}`}> */}
-                                  <a
-                                  onClick={()=>this.handleReadMore()}
-                                    className="readmore"
-                                    data-toggle="modal"
-                                    data-target="#blogModal"
-                                  >
-                                    Read More...
-                                  </a>
+                                <a
+                                  onClick={() => this.handleReadMore(each.id)}
+                                  className="readmore"
+                                  data-toggle="modal"
+                                // data-target="#blogModal"
+                                >
+                                  Read More...
+                                </a>
                                 {/* </Link> */}
                               </div>
                             </div>
@@ -343,7 +403,7 @@ export default class blog extends Component {
                             disabled
                             className={
                               this.state.paginateSeries + 10 <
-                              this.state.totalPages
+                                this.state.totalPages
                                 ? "page-link next"
                                 : "disabled-pagi"
                             }
@@ -354,7 +414,7 @@ export default class blog extends Component {
                         </li>
                       </ul>
                     </nav>
-                  ) }
+                  )}
                 </div>
               </div>
               <div className="col-lg-4">
@@ -490,7 +550,7 @@ export default class blog extends Component {
                       <span
                         id="error"
                         className="error"
-                        // style={styles.display}
+                      // style={styles.display}
                       >
                         Enter User Name
                       </span>
@@ -506,7 +566,7 @@ export default class blog extends Component {
                       <span
                         id="err"
                         className="error"
-                        // style={styles.display}
+                      // style={styles.display}
                       >
                         Enter email address
                       </span>
@@ -539,10 +599,77 @@ export default class blog extends Component {
           isOpen={this.state.isOpen}
           // width={"75%"}
           body={
-            "asd"
+            <div className="modal-body">
+              <p>
+                Enter your name and email address to get access of blog
+                section.
+                <br />* Don't Worry You'll Not be Spammed
+              </p>
+              <div className="row center" style={{ width: "360px" }}>
+                <form method="post" onSubmit={(e) => this.accessBlog(e)}>
+                  <div className="col-md-12">
+                    <input
+                      type="text"
+                      name="firstname"
+                      id="firstname"
+                      className="form-control inputpane"
+                      placeholder="Enter Your Name"
+                      required
+                      onChange={(e) => this.inputHandler(e)}
+                    />
+                    <span
+                      id="error"
+                      className="error"
+                    // style={styles.display}
+                    >
+                      Enter User Name
+                    </span>
+                  </div>
+                  <div className="col-md-12">
+                    <input
+                      type="email"
+                      name="emailaddress"
+                      id="emailaddress"
+                      className="form-control inputpane"
+                      placeholder="Enter Your Email Address"
+                      required
+                      onChange={(e) => this.inputHandler(e)}
+                    />
+                    <span
+                      id="err"
+                      className="error"
+                    // style={styles.display}
+                    >
+                      Enter email address
+                    </span>
+                  </div>
+                  <div className="text-center">
+                    {/* <a
+                      // href="#"
+                      className="button newsletter no-pip"
+                      name=""
+                      id=""
+                    >
+                      Submit */}
+                    <button className="button newsletter no-pip" type="submit">Submit<span>
+                      <i className="fa fa-envelope-o"></i>
+                    </span></button>
+
+                    {/* </a> */}
+                  </div>
+                </form>
+              </div>
+            </div>
           }
         />
       </div>
     );
   }
-}
+};
+
+
+export default connect((state) => {
+  return {
+    isLoggin: state.isLogged
+  }
+})(withRouter(blog));

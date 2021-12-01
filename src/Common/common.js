@@ -13,9 +13,6 @@ export default class Common {
   // }
   static logout() {
     sessionStorage.clear();
-    // for(let i=0;i<10;i++){
-    //   console.log(i);
-    // }
   }
   static groupBy = (keys) => (array) =>
     array.reduce((objectsByKeyValue, obj) => {
@@ -30,7 +27,7 @@ export default class Common {
       return objectsByKeyValue;
     }, {});
 
-  static filterArray(array,search, keys) {
+  static filterArray(array, search, keys) {
     var lowSearch = search.toLowerCase();
     return array.filter((data) =>
       keys.some((key) => String(data[key]).toLowerCase().includes(lowSearch))

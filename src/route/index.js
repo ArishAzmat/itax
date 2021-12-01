@@ -17,31 +17,27 @@ class Index extends Component {
     // uUSER CHECK FROM SESSIONsTORAGE
     // const { dispatch } = this.props;                
     let userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
-    if(userDetails){ 
-    // for(let i=0;i<10;i++){
-    //     console.log(i);
-    //   }   
-    //   console.log('skslkdfjhlsdkfhdskjfhj',userDetails);
+    if (userDetails) {
       this.props.dispatch({
-        type:'LOGIN',
-        payload:userDetails
-      })      ;
+        type: 'LOGIN',
+        payload: userDetails
+      });
       let activeDashboard = '';
-    let { isServiceProvider, isCustomer} = userDetails;
-    if (isServiceProvider == "yes" && isCustomer == "yes") {
-      activeDashboard = 'serviceProvider';
-    } else if (isServiceProvider == "yes") {
-      activeDashboard = "serviceProvider";
-    } else if (isCustomer == "yes") {
-      activeDashboard = "customer";
-    }
-    this.props.dispatch({
-      type:'DASHBOARD',
-      payload:activeDashboard
+      let { isServiceProvider, isCustomer } = userDetails;
+      if (isServiceProvider == "yes" && isCustomer == "yes") {
+        activeDashboard = 'serviceProvider';
+      } else if (isServiceProvider == "yes") {
+        activeDashboard = "serviceProvider";
+      } else if (isCustomer == "yes") {
+        activeDashboard = "customer";
+      }
+      this.props.dispatch({
+        type: 'DASHBOARD',
+        payload: activeDashboard
 
-    })
+      })
     }
-    
+
 
     // else{
     //   this.props.dispatch({
@@ -58,7 +54,7 @@ class Index extends Component {
 
       console.log("userDetails", typeof userDetails);
       // if (typeof userDetails == "object") {
-      if(userDetails){
+      if (userDetails) {
         // Common.saveState(userDetails);
         this.props.dispatch({
           type: "LOGIN",

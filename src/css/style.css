@@ -52,6 +52,23 @@
   font-weight: bold;
   font-size: 1.5rem;
 }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #1c8503;
+  border-radius: 20px;
+  border: transparent;
+}
 body {
   background: #fff none repeat scroll 0 0;
   color: #000;
