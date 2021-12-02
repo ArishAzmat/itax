@@ -12,20 +12,23 @@ function Header(props) {
 
   const handleLogout = () => {
     // setOpenLogoutModal(false);
+    // props.history.push("/");
     RestApi.logout()
       .then((res) => {
+        // console.log(res);
         props.dispatch({
           type: "LOGOUT",
         });
         RestApi.defaultToken(null);
+        props.history.push("/");
         Common.logout();
-        props.history.replace("/");
+
         // toast.success("Logout successfully");
       })
-
       .catch((error) => {
         Common.logout();
       });
+
   };
   const handleClose = () => {
     setOpenLogoutModal(false);
@@ -170,7 +173,7 @@ function Header(props) {
                     type="submit"
                     className="button save-btn dash-logout"
                     title="Logout"
-                    style={{borderRadius:'0px 3px 0px 0px rgb(178 89 1)'}}
+                    style={{ borderRadius: '0px 3px 0px 0px rgb(178 89 1)' }}
                     onClick={() => handleLogout()}
                   >
                     <i className="fa fa-power-off"></i>
@@ -181,13 +184,13 @@ function Header(props) {
               <>
                 {" "}
                 <li>
-                <Link
-                  onClick={() => changeMenu("login")}
-                  to="/login"
-                  className="btn button"
-                >
-                  <i className="fa fa-user" aria-hidden="true"></i> Login
-                </Link>
+                  <Link
+                    onClick={() => changeMenu("login")}
+                    to="/login"
+                    className="btn button"
+                  >
+                    <i className="fa fa-user" aria-hidden="true"></i> Login
+                  </Link>
                 </li>
                 <li>
                   <Link

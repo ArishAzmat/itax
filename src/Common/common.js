@@ -9,7 +9,7 @@ export default class Common {
     sessionStorage.setItem("dashboard", dashboard);
   }
   static logout() {
-    // sessionStorage.clear()
+    sessionStorage.clear();
   }
   static groupBy = (keys) => (array) =>
     array.reduce((objectsByKeyValue, obj) => {
@@ -24,7 +24,7 @@ export default class Common {
       return objectsByKeyValue;
     }, {});
 
-  static filterArray(array,search, keys) {
+  static filterArray(array, search, keys) {
     var lowSearch = search.toLowerCase();
     return array.filter((data) =>
       keys.some((key) => String(data[key]).toLowerCase().includes(lowSearch))

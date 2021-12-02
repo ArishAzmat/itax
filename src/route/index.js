@@ -14,14 +14,47 @@ class Index extends Component {
   componentDidMount() {
     // this.checkLogin();
     this.contactData();
-  }
+    // uUSER CHECK FROM SESSIONsTORAGE
+    // const { dispatch } = this.props;                
+    let userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+    if (userDetails) {
+      this.props.dispatch({
+        type: 'LOGIN',
+        payload: userDetails
+      });
+      let activeDashboard = '';
+      let { isServiceProvider, isCustomer } = userDetails;
+      if (isServiceProvider == "yes" && isCustomer == "yes") {
+        activeDashboard = 'serviceProvider';
+      } else if (isServiceProvider == "yes") {
+        activeDashboard = "serviceProvider";
+      } else if (isCustomer == "yes") {
+        activeDashboard = "customer";
+      }
+      this.props.dispatch({
+        type: 'DASHBOARD',
+        payload: activeDashboard
+
+      })
+    }
+
+
+    // else{
+    //   this.props.dispatch({
+    //     type:'LOGOUT'
+    //   });
+    // }
+  };
   checkLogin() {
     if (!this.props.isLogged) {
       let data = sessionStorage.getItem("userDetails");
       let userDetails = JSON.parse(data);
       let dash = sessionStorage.getItem("dashboard");
       let dashboard = JSON.parse(dash);
-      if (typeof userDetails == "object") {
+
+      // console.log("userDetails", typeof userDetails);
+      // if (typeof userDetails == "object") {
+      if (userDetails) {
         // Common.saveState(userDetails);
         this.props.dispatch({
           type: "LOGIN",
