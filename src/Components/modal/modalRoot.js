@@ -13,7 +13,6 @@ export default function ModalRoot({ isOpen, body, title, close, width }) {
     }
     else {
       document.body.classList.remove("modal-open");
-      // console.log("remopve")
     }
   }, [isOpen]);
 

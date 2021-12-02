@@ -94,17 +94,22 @@ class blog extends Component {
     });
   }
   handleReadMore(id) {
+    for (let i = 0; i < 6; i++) {
+      console.log(this.props.isLoggin);
+    }
     const isSubscribed = JSON.parse(sessionStorage.getItem('isSubscribed'));
     if (this.props.isLoggin) {
-      this.props.history.push(`/blog-details/${id}`);
       this.setState({
         isOpen: false
       });
-    } if (isSubscribed !== null) {
       this.props.history.push(`/blog-details/${id}`);
+
+    } else if (isSubscribed !== null) {
       this.setState({
         isOpen: false
       });
+      this.props.history.push(`/blog-details/${id}`);
+
     } else {
       this.props.history.push('/blog');
       this.setState({

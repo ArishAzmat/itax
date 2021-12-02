@@ -8,7 +8,7 @@ const initialState = {
   activeMenu: "home",
 };
 function reducer(state = initialState, action) {
-console.log("redux",action)
+  console.log("redux", action)
   switch (action.type) {
     case "LOGIN":
       state = { ...state };
@@ -26,7 +26,6 @@ console.log("redux",action)
     case "LOGOUT":
       state = { ...state };
       state["isLogged"] = false;
-      console.log('isLogged','isLogged');
       state["userDetails"] = {};
       return state;
 

@@ -16,12 +16,13 @@ function Header(props) {
     RestApi.logout()
       .then((res) => {
         console.log(res);
+        props.history.push("/");
         props.dispatch({
           type: "LOGOUT",
         });
         RestApi.defaultToken(null);
         Common.logout();
-        props.history.push("/");
+
         // toast.success("Logout successfully");
       })
       .catch((error) => {
@@ -175,7 +176,7 @@ function Header(props) {
                     type="submit"
                     className="button save-btn dash-logout"
                     title="Logout"
-                    style={{borderRadius:'0px 3px 0px 0px rgb(178 89 1)'}}
+                    style={{ borderRadius: '0px 3px 0px 0px rgb(178 89 1)' }}
                     onClick={() => handleLogout()}
                   >
                     <i className="fa fa-power-off"></i>
@@ -186,13 +187,13 @@ function Header(props) {
               <>
                 {" "}
                 <li>
-                <Link
-                  onClick={() => changeMenu("login")}
-                  to="/login"
-                  className="btn button"
-                >
-                  <i className="fa fa-user" aria-hidden="true"></i> Login
-                </Link>
+                  <Link
+                    onClick={() => changeMenu("login")}
+                    to="/login"
+                    className="btn button"
+                  >
+                    <i className="fa fa-user" aria-hidden="true"></i> Login
+                  </Link>
                 </li>
                 <li>
                   <Link

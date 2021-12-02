@@ -8,9 +8,6 @@ export default class Common {
     sessionStorage.setItem("userDetails", userDetails);
     sessionStorage.setItem("dashboard", dashboard);
   }
-  // static login(){
-  //   localSto
-  // }
   static logout() {
     sessionStorage.clear();
   }
