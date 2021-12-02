@@ -22,7 +22,7 @@ function AppyService(props) {
 
   const fetchData = () => {
     RestApi.serviceDocument(id, sId).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data.status) { 
           setServiceDetails({
             document_details:res.data.data.document_details,
@@ -40,7 +40,6 @@ function AppyService(props) {
       console.log("Error: ",e)
     });
   };
-  console.log("ServiceDetails", ServiceDetails);
  
   return (
     <>

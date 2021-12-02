@@ -17,7 +17,7 @@ export default class events extends Component {
   }
   fetchData() {
     RestApi.events().then((res) => {
-      console.log("events", res);
+      // console.log("events", res);
       if (res.data.status) {
         this.setState({
           upComing: res.data.data.upcoming,
@@ -28,7 +28,6 @@ export default class events extends Component {
   }
   render() {
     // let id = this.props.match.params.id
-    console.log("state,", this.state);
     return (
       <>
         <section>

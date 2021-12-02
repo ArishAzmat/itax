@@ -21,10 +21,10 @@ class Faq extends Component {
 
   fetchData() {
     RestApi.faq().then((res) => { 
-      console.log(res);
+      // console.log(res);
       if (res.data.status) {
         let grouped = Common.groupBy(["category_id",'service_name'])(res.data.data);
-        console.log("res", res.data.data);
+
         let categoryIDs =[];
         let totalRecords = res.data.data
         res.data.data.map((c)=> {
@@ -33,8 +33,6 @@ class Faq extends Component {
           }
         })
         let category = this.props.categories.filter((i)=> categoryIDs.includes(i.id))
-        console.log("categories",categoryIDs)
-        console.log("categories",category)
         this.setState({
           services: grouped,
           responseData: res.data.data,
@@ -69,7 +67,6 @@ class Faq extends Component {
     }
     let totalRecords = data.length
     let services = Common.groupBy(["category_id",'service_name'])(data);
-    console.log("-----",data);
     let activeService = Object.keys(services)[0]
     this.setState({
       search,
@@ -79,7 +76,6 @@ class Faq extends Component {
     })
   }
   render() {
-    console.log("state",this.state)
     let { services,activeService,categories,search,totalRecords } = this.state;
     return (
       <div>
@@ -95,7 +91,6 @@ class Faq extends Component {
              <div className="current-opening">
              <ul class="nav nav-pills flex-column" role="tablist">
                 {(categories).map((each, key) => {
-                  console.log("categ",services[each.id])
                     return (
                       <li key={key} onClick={()=>this.handleActiveServie(each.id)}  
                       class={`nav-item ${services[each.id] && search.length > 0 && each.id != activeService && "searchHasService"} ${each.id == activeService && 'active'}`}>

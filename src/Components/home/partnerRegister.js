@@ -32,7 +32,6 @@ const schema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 }).when((values, schema) => {
   if (values.register_as == 'Company' || values.register_as == 'Partner' ) {
-    console.log("values.register_as",values.register_as)
     return schema.shape({
       company_name: Yup.string().required("Company name is required"),
       sign_in_authority: Yup.string().required("Sign in authority name is required"),
@@ -69,7 +68,6 @@ function PartnerRegister(props) {
   const onSubmitHandle = (data) => {
     setResponseError([])
     setMessage("")
-    console.log("asd", areaOfExpertise.length);
     if (areaOfExpertise.length < 1) {
       setError("area_of_expertise", {
         type: "manual",
@@ -77,20 +75,17 @@ function PartnerRegister(props) {
       });
       return false;
     }
-    console.log(data);
     let form = new FormData();
     for (var i in data) {
-      // console.log("form", data[i]);
       form.append(i, data[i]);
     }
-    // console.log('area_of_expertise',areaOfExpertise)
 
     form.append("area_of_expertise", areaOfExpertise);
     if (registerType != "Individual") {
       form.append("first_name", getValues("company_name"));
     }
     RestApi.register(form).then((res) => {
-      console.log("resss", res);
+      // console.log("resss", res);
       if (res.data.status == true) {
         setMessage(res.data.message);
         // toast.success(res.data.message, {
@@ -111,9 +106,7 @@ function PartnerRegister(props) {
       }
       if (res.data.error) {
         let { error } = res.data;
-        //  console.log(err)
         let array = Object.entries(error).map((e) => {
-          console.log(e);
           return { [e[0]]: e[1][0] };
         });
         setResponseError(array);
@@ -143,7 +136,6 @@ function PartnerRegister(props) {
   const handleChange = (e) => {
     setRegisterType(e.target.value);
     setValue("register_as", e.target.value);
-    console.log(getValues("register_as"));
   };
   const handleCheckbox = (e) => {
     let checkboxes = areaOfExpertise;
@@ -165,7 +157,6 @@ function PartnerRegister(props) {
       borderColor: "#bf1f24",
     },
   };
-  console.log(errors);
   return (
     <div className="col-md-4 partner_form">
       <h3>Register for working with us</h3>
@@ -479,7 +470,6 @@ function PartnerRegister(props) {
                         }
         {responseError.length > 0 &&
                       responseError.map((er) => {
-                        console.log(er);
                         return (
                           <><br/>
                           <div className="careerErrorMessage">

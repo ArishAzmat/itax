@@ -34,7 +34,6 @@ const schema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 }) .when((values, schema) => {
   if (values.register_as == 'Company' || values.register_as == 'Partner' ) {
-    console.log("values.register_as",values.register_as)
     return schema.shape({
       company_name: Yup.string().required("Company name is required"),
       sign_in_authority: Yup.string().required("Sign in authority name is required"),
@@ -57,7 +56,7 @@ function CustomerRegister(props) {
 
   useEffect(() => {
     RestApi.placeholder("customer-register").then((res) => {
-      console.log("placeHolder: customer-register: ", res);
+      // console.log("placeHolder: customer-register: ", res);
       setPlaceHolder(res.data.data);
       setRegisterType("Individual")
     });
@@ -77,7 +76,6 @@ function CustomerRegister(props) {
   const onSubmitHandle = (data) => {
     setResponseError([])
     setMessage("")
-    console.log(data);
     let form = new FormData();
     for (var i in data) {
       form.append(i, data[i]);
@@ -86,7 +84,7 @@ function CustomerRegister(props) {
       form.append("first_name", getValues("company_name"));
     }
     RestApi.register(form).then((res) => {
-      console.log("resss", res);
+      // console.log("resss", res);
       if (res.data.status == true) {
         // toast.success(res.data.message, {
         //   position: toast.POSITION.TOP_CENTER,
@@ -108,7 +106,6 @@ function CustomerRegister(props) {
         let { error } = res.data;
         //  console.log(err)
         let array = Object.entries(error).map((e) => {
-          console.log(e);
           return { [e[0]]: e[1][0] };
         });
         setResponseError(array);
@@ -126,14 +123,12 @@ function CustomerRegister(props) {
   const handleChange = (e) => {
     setRegisterType(e.target.value);
     setValue("register_as", e.target.value);
-    console.log(getValues("register_as"));
   };
   const styles = {
     error: {
       borderColor: "#bf1f24",
     },
   };
-  console.log(registerType , errors)
 
   return (
     <div>

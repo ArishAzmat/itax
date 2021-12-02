@@ -17,7 +17,7 @@ export default class Calendar extends Component {
   }
   placeHolderAPI() {
     RestApi.placeholder("calendar").then((res) => {
-      console.log("placeHolder: calendar: ", res);
+      // console.log("placeHolder: calendar: ", res);
       this.setState({ placeholder: res.data.data });
     });
   }
@@ -26,7 +26,7 @@ export default class Calendar extends Component {
     let year = this.props.match.params.year;
     if (month && year) {
       RestApi.calendar(month, year).then((res) => {
-        console.log("calender: ", res);
+        // console.log("calender: ", res);
         if (res.data.status) {
           this.setState({
             data: res.data.data,

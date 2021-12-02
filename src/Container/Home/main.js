@@ -29,7 +29,6 @@ import ApplyForm from './applyForm';
 
 class Main extends Component {
   constructor(props){
-    console.log("props",props)
     super(props)
     this.state = {
       activeForm: 'customer',

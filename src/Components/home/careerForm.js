@@ -52,7 +52,6 @@ export default function CareerFormModal(props) {
     setMessage("")
     let form = new FormData();
     for (var i in data) {
-      console.log("f0orm", data[i]);
       if (i == "attachment") {
         form.append(i, data[i][0]); 
       }
@@ -62,7 +61,6 @@ export default function CareerFormModal(props) {
     } 
 
     RestApi.careerForm(form).then((res) => {
-      console.log(res);
       if (res.data.status) {
         // toast.success(res.data.message, {
         //   position: toast.POSITION.TOP_CENTER,
@@ -75,7 +73,6 @@ export default function CareerFormModal(props) {
           let { error } = res.data;
           //  console.log(err)
           let array = Object.entries(error).map((e) => {
-            console.log(e);
             return { [e[0]]: e[1][0] };
           });
           setResponseError(array);
@@ -102,7 +99,6 @@ export default function CareerFormModal(props) {
       console.log("Error",e)
     });;
   };
-  console.log("errors", responseError);
 
   const styles = {
     error: {
@@ -323,7 +319,6 @@ export default function CareerFormModal(props) {
           <center>
             {responseError.length > 0 &&
               responseError.map((er) => {
-                console.log(er);
                 return (
                   <div className="careerErrorMessage">
                     {" "}
@@ -378,7 +373,7 @@ export const CareerPageForm = () => {
     } 
     
     RestApi.careerForm(form).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data.status) {
         // toast.success(res.data.message, {
         //   position: toast.POSITION.TOP_CENTER,
@@ -391,7 +386,6 @@ export const CareerPageForm = () => {
           let { error } = res.data;
           //  console.log(err)
           let array = Object.entries(error).map((e) => {
-            console.log(e);
             return { [e[0]]: e[1][0] };
           });
           setResponseError(array);
@@ -419,7 +413,6 @@ export const CareerPageForm = () => {
     });;
   };
 
-  console.log("errors", responseError);
 
   const styles = {
     error: {
@@ -659,7 +652,6 @@ export const CareerPageForm = () => {
             <center>
               {responseError.length > 0 &&
                 responseError.map((er) => {
-                  console.log(er);
                   return (
                     <div className="careerErrorMessage">
                       {" "}

@@ -46,7 +46,7 @@ export default class blog extends Component {
   }
   fetchData(currentPage, search, month, year, cId) {
     RestApi.blogs(currentPage, search, month, year, cId).then((res) => {
-      console.log("blog", res);
+      // console.log("blog", res);
       if (res.data.status) {
         let nextPage = res.data.data.blog_list.next_page_url?.slice(
           res.data.data.blog_list.next_page_url.lastIndexOf("=") + 1,
@@ -91,7 +91,6 @@ export default class blog extends Component {
     // })
   }
   changePage(currentPage) {
-    console.log(currentPage);
     if (currentPage != this.state.currentPage && !isNaN(currentPage)) {
       this.setState({ currentPage });
     }
@@ -192,7 +191,6 @@ export default class blog extends Component {
     this.fetchData(1, "", month, year, cId);
   };
   render() {
-    console.log("blog", this.state);
     let {
       monthlyArchives,
       blogsByCategory,

@@ -10,7 +10,7 @@ class sideBar extends Component {
     let d = dashboard ? dashboard :
             userDetails.isServiceProvider ==  'yes' ? userDetails.isServiceProvider :
             userDetails.isCustomer ==  'yes' && userDetails.isCustomer 
-    console.log("props sidebar", props);
+
     this.state = {
       isServiceProvider: userDetails.isServiceProvider,
       isCustomer: userDetails.isCustomer,
@@ -30,7 +30,6 @@ class sideBar extends Component {
   }
 
   changeDashboard(e) {
-    console.log(e.target.value);
     this.setState({ activeDashboard: e.target.value });
   }
   handleSidebar() {
@@ -39,7 +38,6 @@ class sideBar extends Component {
     });
   }
   dashboardMenu() {
-    console.log("this.state.activeDashboard",this.state.activeDashboard)
     if (this.state.activeDashboard == "customer") {
       return (
         <>
@@ -177,7 +175,6 @@ class sideBar extends Component {
   render() {
     let { userDetails } = this.props;
     let { isServiceProvider, isCustomer, activeDashboard } = this.state;
-    console.log(this.state);
     const styles = {
       sideBarMenu: {
         zIndex: "3",
@@ -189,7 +186,6 @@ class sideBar extends Component {
     const month = dateObj.toLocaleString("default", { month: "long" });
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
-    // console.log("sss", day, month, year);
     return (
       <div>
         <nav

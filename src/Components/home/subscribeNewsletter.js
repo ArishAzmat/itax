@@ -30,9 +30,8 @@ function Newsletter() {
   }, []);
 
   const onSubmitHandle = (data) => {
-    console.log(data);
     RestApi.subscribe(data).then((res) => {
-      console.log("subs", res);
+      // console.log("subs", res);
 
       if (res.data.message && res.data.status == false) {
         // toast.error(res.data.message,{

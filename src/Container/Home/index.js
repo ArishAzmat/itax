@@ -30,10 +30,8 @@ class Home extends Component {
   }
   componentDidUpdate() {}
   fetchbanner = () => {
-    console.log("index");
     RestApi.homePage().then((res) => {
       let video = { video_link: "", description: "", video_heading: "" };
-      console.log("response", res.data);
       let { data } = res.data;
       if (data.featured_video != null && data.featured_video.video_link) {
         video.video_link = data.featured_video.video_link.slice(
@@ -57,7 +55,6 @@ class Home extends Component {
     });
   }
   handleServices(services) {
-    console.log("servicess in index", services);
     this.setState({ services });
   }
   handleSearch = (e) => {
@@ -82,9 +79,6 @@ class Home extends Component {
         emptyField: true,
       });
     }
-  }
-  viewBlog(id){
-    this.props.history.push('blog-details/'+id)
   }
   render() {
     let { featuredVideo, bannerData } = this.state;
@@ -166,7 +160,7 @@ class Home extends Component {
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-                            <li onClick={()=> this.viewBlog(each.id)} className="pointer">
+                            <li className="pointer">
                               <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
                             </li>
                         );

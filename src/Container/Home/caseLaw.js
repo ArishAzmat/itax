@@ -54,7 +54,7 @@ export default class CaseLaw extends Component {
     let { currentPage, selectedColumn, search, perPage } = this.state;
     RestApi.caseLaw(pageNo, selectedColumn, search, perPage)
       .then((res) => {
-        console.log(" case law: ", res);
+        // console.log(" case law: ", res);
         //   let grouped = Common.groupBy(['Service_category_id'])(res.data.data);
         if (res.data.status && res.data.data.data) {
           let isSearch = false,
@@ -92,7 +92,6 @@ export default class CaseLaw extends Component {
     });
   }
   changePage(currentPage) {
-    console.log(currentPage);
     if (currentPage != this.state.currentPage && !isNaN(currentPage)) {
       this.setState({ currentPage });
     }
@@ -184,7 +183,6 @@ export default class CaseLaw extends Component {
     });
   }
   handleSubmit() {
-    console.log("handleSubmit");
     this.fetchData(1);
   }
   handleReset() {
@@ -196,7 +194,6 @@ export default class CaseLaw extends Component {
    }, 20);
   }
   render() {
-    console.log("state", this.state);
     let {
       sNo,
       data,
@@ -207,7 +204,6 @@ export default class CaseLaw extends Component {
       keyword,
       isSearch,
     } = this.state;
-    console.log(data);
     return (
       <div>
         <div className="breadcrumbpane">

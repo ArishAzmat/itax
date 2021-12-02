@@ -32,7 +32,7 @@ export default class about extends Component {
 
   fetchData = () => {
     RestApi.aboutUs().then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.status) {
         let about = {
           heading: response.data.data.about_us_profile_heading,
@@ -114,7 +114,7 @@ export default class about extends Component {
                 </div>
                 {this.state.about6T.content.map((each, key) => {
                   return (
-                    <div className="col-md-6">
+                    <div key={key} className="col-md-6">
                       <div className="about-service">
                         <div className="row">
                           <div className="col-md-12">

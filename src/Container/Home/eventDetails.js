@@ -17,7 +17,7 @@ export default class eventDetails extends Component {
     let id = this.props.match.params.id;
     if (id) {
       RestApi.eventDetails(id).then((res) => {
-        console.log("event Details", res);
+        // console.log("event Details", res);
         if (res.data.status) {
           this.setState({
             data: res.data.data,

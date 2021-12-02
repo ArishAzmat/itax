@@ -23,7 +23,7 @@ export default class blogDetails extends Component {
     fetchData(){
       //  if(id){
         RestApi.blogDetails(this.state.id).then((res)=> {
-          console.log("details",res)
+          // console.log("details",res)
           if(res.data.status){
               this.setState({
                   data: res.data.data.blog_details,

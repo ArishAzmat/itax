@@ -21,8 +21,6 @@ class Index extends Component {
       let userDetails = JSON.parse(data);
       let dash = sessionStorage.getItem("dashboard");
       let dashboard = JSON.parse(dash);
-
-      console.log("userDetails", typeof userDetails);
       if (typeof userDetails == "object") {
         // Common.saveState(userDetails);
         this.props.dispatch({
@@ -41,7 +39,6 @@ class Index extends Component {
   }
   contactData() {
     RestApi.contact().then((res) => {
-      console.log("contact", res);
       // let categoryOne = []
       // let categoryTwo = []
 

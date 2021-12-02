@@ -10,11 +10,10 @@ export default class userHeader extends Component {
   }
 
   componentDidMount(){
-    console.log("check axios",axios.defaults.headers.common)
   }
   handleLogout() {
     RestApi.logout().then((res)=> {
-      console.log(res)
+      // console.log(res)
     })
     .catch((error)=> {
       console.log("error!",error);

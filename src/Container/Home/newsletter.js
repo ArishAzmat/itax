@@ -30,7 +30,7 @@ export default class newsletter extends Component {
   fetchData() {
     RestApi.newsletters(this.state.currentPage)
       .then((res) => {
-        console.log("news", res);
+        // console.log("news", res);
         if (res.data.status) {
           let tableOne = [],
             tableTwo = [];
@@ -84,14 +84,12 @@ export default class newsletter extends Component {
   }
   placeHolderAPI() {
     RestApi.placeholder("newsletters").then((res) => {
-      console.log("placeHolder: new: ", res);
       if (res.data.status) {
         this.setState({ placeholder: res.data.data });
       }
     });
   }
   changePage(currentPage) {
-    console.log(currentPage);
     if (currentPage != this.state.currentPage && !isNaN(currentPage)) {
       this.setState({ currentPage });
     }
@@ -172,7 +170,6 @@ export default class newsletter extends Component {
     return renderData;
   }
   render() {
-    console.log("state", this.state);
     let { tableOne, tableTwo } = this.state;
     return (
       <div>

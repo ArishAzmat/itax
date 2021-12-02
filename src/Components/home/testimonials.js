@@ -15,7 +15,7 @@ export default class Testimonials extends Component {
 
   fetchData = () => {
     RestApi.testimonials().then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.data.data) {
         this.setState({
           data: response.data.data,

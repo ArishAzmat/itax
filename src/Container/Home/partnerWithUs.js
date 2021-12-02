@@ -16,7 +16,7 @@ export default class partnerWithUs extends Component {
   }
   fetchData(){
     RestApi.parterWithUs().then((res)=> {
-      console.log("parter: ",res)
+      // console.log("parter: ",res)
       if(res.data.status){
         this.setState({
           content : res.data.data.content
