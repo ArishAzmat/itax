@@ -162,23 +162,54 @@ export function Events() {
     });
   }, []);
   return (
-    <div className="col-xl-3 col-md-6 col-lg-3">
+    <div className="col-xl-3 col-md-6 col-lg-3" >
       <div className="single_department other-act">
         <div className="department_content">
           <h3>Events</h3>
           {data.upComing.length > 0 || data.previous.length > 0 ? (
             <p>
               <div className="events">
-                 {/* <Marquee
-  duration={5000}
-  height="245px"
-  width="100%"
-  axis="Y"
-  align="start"
-  pauseOnHover={true}
-  reverse={true}
-> */}
-                <marquee
+                <Marquee
+                  duration={4000}
+                  background="#fff"
+                  height="240px"
+                  width="100%"
+                  axis='Y'
+                  align="start"
+                  pauseOnHover={true}
+                  reverse={true}
+                >
+                  {data.upComing?.length > 0 && (
+                    <>
+                      <h3>UPCOMING EVENTS</h3>
+                      <ul>
+                        {data.upComing.map((each, i) => {
+                          return (
+                            <li key={i}>
+                              <Link to={`events`}> {each.heading}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  )}
+                  {data.previous?.length > 0 && (
+                    <>
+                      <h3>PREVIOUS EVENTS</h3>
+                      <ul>
+                        {data.previous.map((each, i) => {
+                          return (
+                            <li key={i}>
+                              <Link to={`events`}>{each.heading}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  )}
+                </Marquee>
+
+                {/* <marquee
                   style={{ height: "240px" }}
                   behavior="scroll"
                   direction="up"
@@ -214,7 +245,7 @@ export function Events() {
                       </ul>
                     </>
                   )}
-                </marquee>
+                </marquee> */}
               </div>
             </p>
           ) : (

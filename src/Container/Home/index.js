@@ -9,7 +9,7 @@ import Newsletter from "../../Components/home/subscribeNewsletter";
 import RestApi from "../../services/api";
 import { Link } from "react-router-dom";
 import Footer from "../../Common/footer";
-import Marquee from "react-easy-marquee";
+import Marquee from "react-fast-marquee";
 import { withRouter } from "react-router-dom";
 import { Events, Calender, DownloadForm } from "../../Components/home/features";
 
@@ -28,7 +28,7 @@ class Home extends Component {
   componentDidMount() {
     this.fetchbanner();
   }
-  componentDidUpdate() {}
+  componentDidUpdate() { }
   fetchbanner = () => {
     console.log("index");
     RestApi.homePage().then((res) => {
@@ -83,8 +83,8 @@ class Home extends Component {
       });
     }
   }
-  viewBlog(id){
-    this.props.history.push('blog-details/'+id)
+  viewBlog(id) {
+    this.props.history.push('blog-details/' + id)
   }
   render() {
     let { featuredVideo, bannerData } = this.state;
@@ -157,18 +157,19 @@ class Home extends Component {
                   <img src={blogImage} className="blog-home-img" />
                   <ul className="marquee-ul">
                     <Marquee
-                      duration={15000}
+                      speed={80}
+                      loop={0}
+                      play={true}
                       pauseOnHover={true}
-                      axis={'X'}
+                      axis='left'
                       background="#fafafa"
                       height="25px"
-                      reverse={true}
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-                            <li onClick={()=> this.viewBlog(each.id)} className="pointer">
-                              <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
-                            </li>
+                          <li onClick={() => this.viewBlog(each.id)} className="pointer">
+                            <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
+                          </li>
                         );
                       })}
                     </Marquee>
@@ -194,7 +195,7 @@ class Home extends Component {
           )}
           <Services setService={(service) => this.handleServices(service)} />
           <section
-            className="our_department_area"style={{backgroundColor:'#f3f3f3'}}
+            className="our_department_area" style={{ backgroundColor: '#f3f3f3' }}
           >
             <div className="container">
               <div className="row">
