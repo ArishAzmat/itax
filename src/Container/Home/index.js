@@ -80,12 +80,14 @@ class Home extends Component {
       });
     }
   }
-<<<<<<< HEAD
-  viewBlog(id) {
-    this.props.history.push('blog-details/' + id)
+  handleMouseOver(){
+    let doc = document.getElementById('marquee-blog');
+    doc.stop()
   }
-=======
->>>>>>> 741e300e18337590dea9d9f4be4e0d2c30780edf
+  handleMouseOut(){
+    let doc = document.getElementById('marquee-blog');
+    doc.start()
+  }
   render() {
     let { featuredVideo, bannerData } = this.state;
     return (
@@ -156,7 +158,7 @@ class Home extends Component {
                 <div className="marquetext marquee">
                   <img src={blogImage} className="blog-home-img" />
                   <ul className="marquee-ul">
-                    <Marquee
+                    {/* <Marquee
                       speed={80}
                       loop={0}
                       play={true}
@@ -167,22 +169,17 @@ class Home extends Component {
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-<<<<<<< HEAD
-                          <li onClick={() => this.viewBlog(each.id)} className="pointer">
-                            <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
-                          </li>
-=======
                             <li className="pointer">
                               <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
                             </li>
->>>>>>> 741e300e18337590dea9d9f4be4e0d2c30780edf
                         );
                       })}
-                    </Marquee>
-                    {/* <marquee
+                    </Marquee> */}
+                    <marquee
+                    id="marquee-blog"
                       behavior="scroll"
-                      onMouseOver="stop()"
-                      onMouseOut="start()"
+                      onMouseOver={()=>this.handleMouseOver()}
+                      onMouseOut={()=>this.handleMouseOut()}
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
@@ -193,7 +190,7 @@ class Home extends Component {
                           </Link>
                         );
                       })}
-                    </marquee> */}
+                    </marquee>
                   </ul>
                 </div>
               </div>
