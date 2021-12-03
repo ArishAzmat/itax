@@ -183,7 +183,7 @@ class Home extends Component {
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-                          <Link  key={i} to={`blog-details/${each.id}`}>
+                          <Link style={{marginRight:'20px'}}  key={i} to={`blog-details/${each.id}`}>
                             <li>
                               <a className="not-hover">{each.heading}</a>
                             </li>
