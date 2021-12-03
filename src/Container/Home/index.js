@@ -30,10 +30,8 @@ class Home extends Component {
   }
   componentDidUpdate() { }
   fetchbanner = () => {
-    console.log("index");
     RestApi.homePage().then((res) => {
       let video = { video_link: "", description: "", video_heading: "" };
-      console.log("response", res.data);
       let { data } = res.data;
       if (data.featured_video != null && data.featured_video.video_link) {
         video.video_link = data.featured_video.video_link.slice(
@@ -57,7 +55,6 @@ class Home extends Component {
     });
   }
   handleServices(services) {
-    console.log("servicess in index", services);
     this.setState({ services });
   }
   handleSearch = (e) => {
@@ -83,9 +80,12 @@ class Home extends Component {
       });
     }
   }
+<<<<<<< HEAD
   viewBlog(id) {
     this.props.history.push('blog-details/' + id)
   }
+=======
+>>>>>>> 741e300e18337590dea9d9f4be4e0d2c30780edf
   render() {
     let { featuredVideo, bannerData } = this.state;
     return (
@@ -167,9 +167,15 @@ class Home extends Component {
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
+<<<<<<< HEAD
                           <li onClick={() => this.viewBlog(each.id)} className="pointer">
                             <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
                           </li>
+=======
+                            <li className="pointer">
+                              <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
+                            </li>
+>>>>>>> 741e300e18337590dea9d9f4be4e0d2c30780edf
                         );
                       })}
                     </Marquee>

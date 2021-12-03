@@ -25,7 +25,7 @@ class ServiceSearch extends Component {
   fetchData() {
     RestApi.categories()
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data.status) {
           let data = [];
           if (this.state.search && this.state.search.length > 0) {
@@ -111,7 +111,6 @@ class ServiceSearch extends Component {
   //   });
   // };
   render() {
-    console.log("state", this.state);
     let { services, search, activeService, totalRecords,categories } = this.state;
     return (
       <div>
@@ -209,7 +208,6 @@ class ServiceSearch extends Component {
                      })}
                    </div>
                  )} /> */}
-                 { console.log(Object.entries(services))}
                   {search.length > 0 && Object.entries(services).length > 0 &&  (
                    
                           <div className="serviceSearchResults">

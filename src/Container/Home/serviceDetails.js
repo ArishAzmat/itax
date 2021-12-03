@@ -33,7 +33,7 @@ export default class ServiceDetails extends Component {
     let sId = this.props.match.params.sId;
     if (id) {
       RestApi.services(id).then((res) => {
-        console.log("sevices", res);
+        // console.log("sevices", res);
         let activeService={}
         let applyForm = false
         if (res.data.status) {
@@ -70,7 +70,6 @@ export default class ServiceDetails extends Component {
   }
 
   render() {
-  console.log(this.props.match.params.sId,this.state)
     let {
       title,
       category,

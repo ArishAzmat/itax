@@ -52,7 +52,7 @@ class Index extends Component {
       let dash = sessionStorage.getItem("dashboard");
       let dashboard = JSON.parse(dash);
 
-      console.log("userDetails", typeof userDetails);
+      // console.log("userDetails", typeof userDetails);
       // if (typeof userDetails == "object") {
       if (userDetails) {
         // Common.saveState(userDetails);
@@ -72,7 +72,6 @@ class Index extends Component {
   }
   contactData() {
     RestApi.contact().then((res) => {
-      console.log("contact", res);
       // let categoryOne = []
       // let categoryTwo = []
 

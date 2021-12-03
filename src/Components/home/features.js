@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Marquee from "react-easy-marquee";
 export function Calender(props) {
   const [year, setYear] = useState(new Date().getFullYear());
-  console.log(year);
   return (
     <div className="col-xl-3 col-md-6 col-lg-3">
       <div className="single_department other-act">
@@ -152,7 +151,7 @@ export function Events() {
   const [data, setData] = useState({ upComing: [], previous: [] });
   useEffect(() => {
     RestApi.homeEvents().then((res) => {
-      console.log("events: ", res);
+      // console.log("events: ", res);
       if (res.data.status) {
         setData({
           upComing: res.data.data.upcoming,

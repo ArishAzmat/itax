@@ -15,19 +15,18 @@ function Header(props) {
     // props.history.push("/");
     RestApi.logout()
       .then((res) => {
-        console.log(res);
-        props.history.push("/");
+        // console.log(res);
         props.dispatch({
           type: "LOGOUT",
         });
         RestApi.defaultToken(null);
+        props.history.push("/");
         Common.logout();
 
         // toast.success("Logout successfully");
       })
       .catch((error) => {
         Common.logout();
-        console.log("error!", error);
       });
 
   };
@@ -51,14 +50,12 @@ function Header(props) {
     ];
     let s = routes.filter((r) => r == props.location.pathname);
     if (s.length == 1 || props.location.pathname.match(/calendar/)) {
-      // console.log(s, "found", props.location.pathname);
       return true;
     } else {
-      // console.log(s, "found not", props);
       return false;
     }
   };
-  console.log("header props: ", props);
+  // console.log("header props: ", props);
   return (
     //  site-navigation start
     <nav
@@ -327,7 +324,6 @@ function Header(props) {
 }
 
 export default connect((state, props) => {
-  console.log("state redux", state);
   return {
     isLogged: state.isLogged,
     socialIcons: state.socialIcons,

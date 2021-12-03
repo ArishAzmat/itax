@@ -10,7 +10,7 @@ export default function Services(props) {
 
   useEffect(() => {
     RestApi.categories().then((res) => {
-      console.log("service", res);
+      // console.log("service", res);
       if (res.data.status) {
         props.setService(res.data.data)
         let filtered = res.data.data.filter(i => i.show_on_home_page == 1)
@@ -21,7 +21,6 @@ export default function Services(props) {
       }
     });
   }, []);
-  console.log(data);
   return (
     <section>
       <div className="our_department_area">
@@ -43,7 +42,6 @@ export default function Services(props) {
           <div className="row">
             {Object.entries(data).length > 0  &&
               Object.entries(data).map((each) => {
-                console.log(each[1])
                 return (
                   <div key={each[0]} className="col-xl-3 col-md-6 col-lg-3">
                     <div className="single_department">

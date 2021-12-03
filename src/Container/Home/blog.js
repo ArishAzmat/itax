@@ -54,7 +54,7 @@ class blog extends Component {
   }
   fetchData(currentPage, search, month, year, cId) {
     RestApi.blogs(currentPage, search, month, year, cId).then((res) => {
-      console.log("blog", res);
+      // console.log("blog", res);
       if (res.data.status) {
         let nextPage = res.data.data.blog_list.next_page_url?.slice(
           res.data.data.blog_list.next_page_url.lastIndexOf("=") + 1,
@@ -95,7 +95,7 @@ class blog extends Component {
   }
   handleReadMore(id) {
     for (let i = 0; i < 6; i++) {
-      console.log(this.props.isLoggin);
+      // console.log(this.props.isLoggin);
     }
     const isSubscribed = JSON.parse(sessionStorage.getItem('isSubscribed'));
     if (this.props.isLoggin) {
@@ -111,7 +111,7 @@ class blog extends Component {
       this.props.history.push(`/blog-details/${id}`);
 
     } else {
-      this.props.history.push('/blog');
+      // this.props.history.push('/blog');
       this.setState({
         isOpen: true
       });
@@ -119,7 +119,6 @@ class blog extends Component {
 
   }
   changePage(currentPage) {
-    console.log(currentPage);
     if (currentPage != this.state.currentPage && !isNaN(currentPage)) {
       this.setState({ currentPage });
     }
@@ -228,7 +227,7 @@ class blog extends Component {
       data.email = e.target.value;
     }
     this.setState({ subscriber: data });
-    console.log(this.state.subscriber);
+    // console.log(this.state.subscriber);
 
   }
   accessBlog(e) {
@@ -236,8 +235,8 @@ class blog extends Component {
     let params = this.state.subscriber;
     RestApi.blogAccess(params)
       .then(data => {
-        console.log('blog data', data);
-        console.log(data.data.message);
+        // console.log('blog data', data);
+        // console.log(data.data.message);
         this.setState({ subscriber: { name: '', email: '' } });
         if (data.data.message === 'This email id is already subscribed.') {
           sessionStorage.setItem('isSubscribed', JSON.stringify(params));
@@ -257,7 +256,6 @@ class blog extends Component {
 
   }
   render() {
-    console.log("blog", this.state);
     let {
       monthlyArchives,
       blogsByCategory,
@@ -327,7 +325,7 @@ class blog extends Component {
                                 <a
                                   onClick={() => this.handleReadMore(each.id)}
                                   className="readmore"
-                                  data-toggle="modal"
+                                  // data-toggle="modal"
                                 // data-target="#blogModal"
                                 >
                                   Read More...

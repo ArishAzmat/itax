@@ -18,12 +18,10 @@ const printDocument = () =>{
 
   var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
 
-  console.log("test here",document.getElementById('HTMLtoPDF'))
   html2canvas(document.getElementById('HTMLtoPDF'),{allowTaint:true}).then(function(canvas) {
-    console.log("then=>")
     canvas.getContext('2d');
 
-    console.log(canvas.height+"  "+canvas.width);
+    // console.log(canvas.height+"  "+canvas.width);
 
 
 
@@ -32,7 +30,6 @@ const printDocument = () =>{
     var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
       pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
 
-    console.log("totalPDFPages",totalPDFPages)
     for (var i = 1; i <= totalPDFPages; i++) { 
       // pdf.text('Page ' + String(i) + ' of ' + String(totalPDFPages), pdf.internal.pageSize.width -100, pdf.internal.pageSize.height - 20, {
       //   align: 'center'

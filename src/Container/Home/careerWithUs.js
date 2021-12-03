@@ -28,19 +28,18 @@ export default class career extends Component {
   }
   fetchData = () => {
     RestApi.careers().then((res) => {
-      console.log("careers", res);
+      // console.log("careers", res);
       let positions = res.data.data;
       this.setState({ positions });
     });
   };
   placeHolderAPI() {
     RestApi.placeholder("career").then((res) => {
-      console.log("placeHolder: career: ", res);
+      // console.log("placeHolder: career: ", res);
       this.setState({ placeholder: res.data.data });
     });
   }
   render() {
-    console.log("this", this.state);
     return (
       <>
         <Header />

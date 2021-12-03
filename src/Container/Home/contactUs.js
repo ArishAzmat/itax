@@ -33,9 +33,8 @@ function ContactUs(props) {
   });
 
   const onSubmitHandle = (data) => {
-    console.log(data)
     RestApi.contactUs(data).then((res)=>{
-      console.log(res)
+      // console.log(res)
       if(res.data.message){
         reset()
         // toast.success(res.data.message, {
@@ -47,7 +46,6 @@ function ContactUs(props) {
     })
     
   };
-  console.log("errors",errors)
 
   const styles = {
     error: {

@@ -22,7 +22,7 @@ export default class Service extends Component {
 
   fetchData() {
     RestApi.categories().then((res) => {
-      console.log("servicePage: ", res.data.data);
+      // console.log("servicePage: ", res.data.data);
         let groupedData = Common.groupBy(['sequence_no'])(res.data.data)
      
       // let groupedData = Common.groupBy(['category_id'])(res.data.data);

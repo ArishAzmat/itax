@@ -26,7 +26,6 @@ export default class ApplyForm extends Component {
     };
   }
   componentDidMount() {
-      console.log("asdsadasd aplyform")
     this.fetchData();
   }
 
@@ -39,14 +38,12 @@ export default class ApplyForm extends Component {
     let cid = this.props.match.params.cid;
     let sId = this.props.match.params.sId;
     RestApi.serviceDocument(cid, sId).then((res) => {
-        console.log(res);
         if (res.data.status) { 
             let {data} = res.data;
             let options = [];
             let isCustomised =  data.service_details.is_customized == '0' ? true : false;
             if(isCustomised){
             options = Common.groupBy(['frequency'])(data.options)
-            console.log("groupedOptions",options)
             } 
             
             this.setState({
@@ -72,7 +69,6 @@ export default class ApplyForm extends Component {
 
   handleCheckbox =(e)=> {
     let {totalAmount,selectedOptions} = this.state
-    console.log(selectedOptions)
       if(e.target.checked) {
         totalAmount += parseFloat(e.target.value)
         selectedOptions[e.target.name] = [...selectedOptions[e.target.name], e.target.value]
@@ -99,7 +95,6 @@ export default class ApplyForm extends Component {
   }
 
   render() {
-  console.log(this.props.match.params.sId,this.state)
     let {
       isQuotation,
       relatedServices,

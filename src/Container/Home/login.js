@@ -62,7 +62,7 @@ function Login(props) {
 
   const handleResponse = (response) => {
     setApiResponse({error:'',message: "Login SuccessFull"});
-    console.log(response);
+    // console.log(response);
     RestApi.defaultToken(response.data.access_token);
     let res = response.data;
     let data = {
@@ -98,8 +98,7 @@ function Login(props) {
 
   const responseFacebook = (res) => {
     // handleShowMessageClick()
-    console.log(res);
-    console.log("data", res);
+    // console.log(res);
     if (res.userID) {
       let data = {
         login_type: "facebook",
@@ -114,7 +113,7 @@ function Login(props) {
     }
   };
   const responseGoogle = (googleRes) => {
-    console.log("data", googleRes);
+    // console.log("data", googleRes);
     if (googleRes.googleId) {
       let data = {
         email: googleRes.profileObj.email,
@@ -134,12 +133,11 @@ function Login(props) {
   const handleFormLogin = (data) => {
     let { email, password } = data;
     RestApi.login(data).then((response) => {
-      console.log("reponse", response);
+      // console.log("reponse", response);
 
       if (response.data.error) {
         reset({ email: email, password: "" });
         let { error } = response.data;
-        console.log("error: ", error);
         if(response.data.message){
           setApiResponse({message:'',error: response.data.message});
         }
@@ -179,12 +177,11 @@ function Login(props) {
   }
 const handleSocialLogin = (loginData) => {
   RestApi.socialLogin(loginData).then((res) => {
-    console.log("socialLogin: ", res);
+    // console.log("socialLogin: ", res);
     if (res.data.access_token && res.data.status == true) {
       handleResponse(res);
     }
     if (res.data.status == false && res.data.status_code == 300) {
-      console.log("res", res);
       setShowRegisterModal({
         status: true,
         message: res.data.message,
@@ -193,7 +190,7 @@ const handleSocialLogin = (loginData) => {
       });
     }
   }).catch(function (error) {
-    console.log("Show error notification!");
+    console.log("Error!");
     return Promise.reject(error);
   });;
 }
@@ -300,7 +297,6 @@ const handleSocialLogin = (loginData) => {
     showRegisterModal({ status: false, message: "" });
   };
 
-  console.log("message", apiResponse);
 
   const styles = {
     error: {
@@ -640,7 +636,6 @@ const handleSocialLogin = (loginData) => {
 }
 
 export default connect((state, props) => {
-  console.log("state", state);
   return {
     isLogged: state.isLogged && state.isLogged,
     userDetails: state.userDetails && state.userDetails,

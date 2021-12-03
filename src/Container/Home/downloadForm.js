@@ -21,14 +21,14 @@ export default class downloadForm extends Component {
 
   placeHolderAPI() {
     RestApi.placeholder("download-forms").then((res) => {
-      console.log("placeHolder: downloadFOrm: ", res);
+      // console.log("placeHolder: downloadFOrm: ", res);
 
       this.setState({ placeholder: res.data.data });
     });
   }
   fetchData() {
     RestApi.downloadForm().then((res) => {
-      console.log("downloadFOrm: ", res);
+      // console.log("downloadFOrm: ", res);
       let grouped = Common.groupBy(["Service_category_id"])(res.data.data);
       if (res.data.status) {
         this.setState({
@@ -48,7 +48,6 @@ export default class downloadForm extends Component {
     let formData = [];
     // console.log("state", this.state);
     let { data, response,activeCategory } = this.state;
-    console.log(data);
     if (activeCategory == "0") {
       formData = response;
     } else {

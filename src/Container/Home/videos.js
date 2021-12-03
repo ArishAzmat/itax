@@ -16,7 +16,7 @@ export default class videos extends Component {
   }
   fetchData() {
     RestApi.videos().then((res) => {
-      console.log("videos", res);
+      // console.log("videos", res);
       this.setState({
         featured: res.data.data.featured,
         others: res.data.data.others,
