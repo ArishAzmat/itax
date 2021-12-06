@@ -80,12 +80,6 @@ class Home extends Component {
       });
     }
   }
-<<<<<<< HEAD
-  viewBlog(id) {
-    this.props.history.push('blog-details/' + id)
-  }
-=======
->>>>>>> 741e300e18337590dea9d9f4be4e0d2c30780edf
   render() {
     let { featuredVideo, bannerData } = this.state;
     return (
@@ -167,15 +161,9 @@ class Home extends Component {
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-<<<<<<< HEAD
-                          <li onClick={() => this.viewBlog(each.id)} className="pointer">
+                          <li className="pointer">
                             <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
                           </li>
-=======
-                            <li className="pointer">
-                              <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
-                            </li>
->>>>>>> 741e300e18337590dea9d9f4be4e0d2c30780edf
                         );
                       })}
                     </Marquee>

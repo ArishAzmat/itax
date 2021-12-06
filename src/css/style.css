@@ -3750,6 +3750,7 @@ transform: translateY(-2%);
   font-weight: 600;
   text-align: center;
   font-size: 14px;
+  margin-top: 3rem;
 }
 .disabled-pagi {
   background-image: linear-gradient(180deg, #ffec9f, #ffbe4c) !important;
@@ -3816,7 +3817,7 @@ transform: translateY(-2%);
   margin-right: 18px!important;
 }
 .chkbox-partnerReg{
-  margin-left: 9px;
+  margin-left: 3px;
 }
 .login-footer-customer{
   margin-left: 29px;

@@ -18,7 +18,7 @@ const schema = Yup.object().shape({
     .required("Email is required"),
   // first_name: Yup.string().required("First name is required"),
   agree: Yup.boolean().oneOf([true]),
-  register_as:Yup.string().required('').default('Individual'),
+  register_as: Yup.string().required('').default('Individual'),
   // area_of_expertise: up
   // .array()
   // .of(
@@ -47,19 +47,19 @@ const schema = Yup.object().shape({
       if (password) return schema.required("Confirm Password is required");
     })
     .oneOf([Yup.ref("password")], "Passwords must match"),
-}) .when((values, schema) => {
-  if (values.register_as == 'Company' || values.register_as == 'Partner' ) {
+}).when((values, schema) => {
+  if (values.register_as == 'Company' || values.register_as == 'Partner') {
     return schema.shape({
       company_name: Yup.string().required("Company name is required"),
       sign_in_authority: Yup.string().required("Sign in authority name is required"),
-     
+
     });
   }
   else {
     return schema.shape({
       first_name: Yup.string().required("First name is required"),
       last_name: Yup.string().required("Last name is required"),
-    }); 
+    });
   }
 });
 function PartnerRegister(props) {
@@ -109,9 +109,9 @@ function PartnerRegister(props) {
   const onSubmitHandle = (data) => {
     setResponseError([])
     setMessage("")
-   
-    if(areaOfExpertise.length < 1) {
-      
+
+    if (areaOfExpertise.length < 1) {
+
       setError("area_of_expertise", {
         type: "manual",
         message: "Atleast one Area of Expertise is required",
@@ -221,7 +221,7 @@ function PartnerRegister(props) {
                         <div class="col col-10">
                           <label
                             className="input"
-                           
+
                           >
                             {/* <!-- <i class="icon-append fa fa-angle-down"></i> --> */}
                             <select
@@ -230,7 +230,7 @@ function PartnerRegister(props) {
                               // {...register("register_as")}
                               class="form-control selectpicker customer_down_arrow"
                               data-style="btn-white"
-                              style={{ width: "96%",height:'23px' }}
+                              style={{ width: "96%", height: '23px' }}
                             >
                               {" "}
                               <option selected="1" disabled>
@@ -285,7 +285,7 @@ function PartnerRegister(props) {
                           />
                           <label
                             className="input"
-                           
+
                           >
                             <i className="icon-append fa fa-envelope-o"></i>
                             <input
@@ -313,7 +313,7 @@ function PartnerRegister(props) {
                             <div className="col col-10">
                               <label
                                 className="input"
-                               
+
                               >
                                 <i className="icon-append fa fa-user-o"></i>
                                 <input
@@ -337,7 +337,7 @@ function PartnerRegister(props) {
                             <div className="col col-10">
                               <label
                                 className="input"
-                               
+
                               >
                                 <i className="icon-append fa fa-user-o"></i>
                                 <input
@@ -355,7 +355,7 @@ function PartnerRegister(props) {
                             <div className="col col-10">
                               <label
                                 className="input"
-                               
+
                               >
                                 <i className="icon-append fa fa-user-o"></i>
                                 <input
@@ -364,11 +364,11 @@ function PartnerRegister(props) {
                                   placeholder="Last Name"
                                   autocomplete="off"
                                 />
-                                 {errors["last_name"] && (
-                              <span style={{ color: "#bf1f24" }}>
-                                {errors["last_name"].message}
-                              </span>
-                            )}
+                                {errors["last_name"] && (
+                                  <span style={{ color: "#bf1f24" }}>
+                                    {errors["last_name"].message}
+                                  </span>
+                                )}
                               </label>
                             </div>
                           </div>
@@ -381,7 +381,7 @@ function PartnerRegister(props) {
                             <div className="col col-10">
                               <label
                                 className="input"
-                               
+
                               >
                                 <i className="icon-append fa fa-user-o"></i>
                                 <input
@@ -408,7 +408,7 @@ function PartnerRegister(props) {
                             <div className="col col-10">
                               <label
                                 className="input"
-                               
+
                               >
                                 <i className="icon-append fa fa-user-o"></i>
                                 <input
@@ -430,7 +430,7 @@ function PartnerRegister(props) {
                         <div className="col col-10">
                           <label
                             className="input"
-                           
+
                           >
                             <i className="icon-append fa fa-mobile"></i>
                             <input
@@ -455,7 +455,7 @@ function PartnerRegister(props) {
                         <div className="col col-10">
                           <label
                             className="input"
-                           
+
                           >
                             <i className="icon-append fa fa-lock"></i>
                             <input
@@ -478,7 +478,7 @@ function PartnerRegister(props) {
                         <div className="col col-10">
                           <label
                             className="input"
-                           
+
                           >
                             <i className="icon-append fa fa-lock"></i>
                             <input
@@ -501,7 +501,7 @@ function PartnerRegister(props) {
 
                     <div className="area_expertise clearfix">
                       <h4>Area of expertise</h4>
-                     
+
                       <div className="expertise_left">
                         {categoryOne.length > 0 &&
                           categoryOne.map((e) => {
@@ -560,11 +560,11 @@ function PartnerRegister(props) {
                       </div>
                     </div>
                     {errors["area_of_expertise"] && (
-                       <div style={{margin: '4px'}}> <span style={{ color: "#bf1f24" }}>
-                          {errors["area_of_expertise"].message}
-                        </span>
-                        </div>
-                      )}
+                      <div style={{ margin: '4px' }}> <span style={{ color: "#bf1f24" }}>
+                        {errors["area_of_expertise"].message}
+                      </span>
+                      </div>
+                    )}
                     <div className="chkbox-group chkbox-partnerReg">
                       <input
                         {...register("agree")}
@@ -581,7 +581,7 @@ function PartnerRegister(props) {
                         Term & Condition
                       </a>
                     </div>
-                    
+
                     {responseError.length > 0 &&
                       responseError.map((er) => {
                         return (
@@ -604,17 +604,19 @@ function PartnerRegister(props) {
                       Create Account
                     </button>
                   </div>
-                
-                  {message.length > 0 && 
-                  <>
-                    <br/>
-                     <div className="subscirbeMessage">
+
+                  {message.length > 0 &&
+                    <>
+                      <br />
+                      <div className="subscirbeMessage">
                         <div className="alert alert-success">
-                        {message}</div></div></>
-                        }
+                          {message}</div>
+                      </div>
+                    </>
+                  }
                 </form>
 
-                <div className="login-footer clearfix" style={{marginRight:'24px',marginLeft:'4px'}}>
+                <div className="login-footer clearfix" style={{ marginRight: '24px', marginLeft: '4px' }}>
                   <p className="pull-left part_log">Already have an account?</p>
                   <Link
                     to="/login"
