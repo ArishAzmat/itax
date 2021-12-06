@@ -80,6 +80,14 @@ class Home extends Component {
       });
     }
   }
+  handleMouseOver() {
+    let doc = document.getElementById('marquee-blog');
+    doc.stop()
+  }
+  handleMouseOut() {
+    let doc = document.getElementById('marquee-blog');
+    doc.start()
+  }
   render() {
     let { featuredVideo, bannerData } = this.state;
     return (
@@ -150,7 +158,7 @@ class Home extends Component {
                 <div className="marquetext marquee">
                   <img src={blogImage} className="blog-home-img" />
                   <ul className="marquee-ul">
-                    <Marquee
+                    {/* <Marquee
                       speed={80}
                       loop={0}
                       play={true}
@@ -161,27 +169,28 @@ class Home extends Component {
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-                          <li className="pointer">
-                            <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
-                          </li>
+                            <li className="pointer">
+                              <Link className="not-hover" to={`blog-details/${each.id}`}>{each.heading}</Link >
+                            </li>
                         );
                       })}
-                    </Marquee>
-                    {/* <marquee
+                    </Marquee> */}
+                    <marquee
+                      id="marquee-blog"
                       behavior="scroll"
-                      onMouseOver="stop()"
-                      onMouseOut="start()"
+                      onMouseOver={() => this.handleMouseOver()}
+                      onMouseOut={() => this.handleMouseOut()}
                     >
                       {this.state.blogs.map((each, i) => {
                         return (
-                          <Link  key={i} to={`blog-details/${each.id}`}>
+                          <Link style={{ marginRight: '20px' }} key={i} to={`blog-details/${each.id}`}>
                             <li>
                               <a className="not-hover">{each.heading}</a>
                             </li>
                           </Link>
                         );
                       })}
-                    </marquee> */}
+                    </marquee>
                   </ul>
                 </div>
               </div>

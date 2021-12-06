@@ -160,6 +160,16 @@ export function Events() {
       }
     });
   }, []);
+  
+  const handleMouseOver =()=> {
+    let doc = document.getElementById('marquee-event');
+    doc.stop()
+  }
+  const handleMouseOut =() =>{
+    let doc = document.getElementById('marquee-event');
+    doc.start()
+  }
+
   return (
     <div className="col-xl-3 col-md-6 col-lg-3" >
       <div className="single_department other-act">
@@ -168,7 +178,7 @@ export function Events() {
           {data.upComing.length > 0 || data.previous.length > 0 ? (
             <p>
               <div className="events">
-                <Marquee
+                {/* <Marquee
                   duration={4000}
                   background="#fff"
                   height="240px"
@@ -206,15 +216,16 @@ export function Events() {
                       </ul>
                     </>
                   )}
-                </Marquee>
+                </Marquee> */}
 
-                {/* <marquee
+                <marquee
+                id="marquee-event"
                   style={{ height: "240px" }}
                   behavior="scroll"
                   direction="up"
                   scrolldelay="200"
-                  onmouseover="stop()"
-                  onmouseout="start()"
+                  onMouseOver={()=> handleMouseOver()}
+                  onMouseOut={()=> handleMouseOut()}
                 >
                   {data.upComing?.length > 0 && (
                     <>
@@ -244,7 +255,7 @@ export function Events() {
                       </ul>
                     </>
                   )}
-                </marquee> */}
+                </marquee>
               </div>
             </p>
           ) : (
