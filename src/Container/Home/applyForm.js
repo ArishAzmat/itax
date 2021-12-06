@@ -366,7 +366,7 @@ export default class ApplyForm extends Component {
               </div>
             </div>
             <div class="form-group text-center">
-              <a href="doc-submit.php" class="button" style={{ margin: "0" }}>
+              <a href="#" class="button" style={{ margin: "0" }}>
                 Submit
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
@@ -379,7 +379,7 @@ export default class ApplyForm extends Component {
       </div>
                 <div class="col-md-4">
                 <div class="mb-10">
-                  <a href="create_own_services.php" class="create_own_services">
+                  <a href="#" class="create_own_services">
                     <i class="fa fa-gg" aria-hidden="true"></i>&nbsp;<h4>Create Your Own Services</h4>
                   </a>
                   </div>
